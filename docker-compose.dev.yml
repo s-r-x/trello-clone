@@ -29,5 +29,6 @@ services:
       - "PG_DB=${PG_DB_DEV}"
       - "PG_HOST=pg"
       - "PASSWORD_SALT=${PASSWORD_SALT_DEV}"
+      - "JWT_SECRET=${JWT_SECRET_DEV}"
     depends_on: 
       - pg
