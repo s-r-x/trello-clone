@@ -7,7 +7,9 @@ import {
   IRequestWithUserId,
 } from './interface/request.interface';
 import { UsersService } from '../users/users.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService, private usersService: UsersService) {}
