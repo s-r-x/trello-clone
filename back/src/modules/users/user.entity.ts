@@ -13,7 +13,7 @@ export class User {
   @ApiProperty()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   @ApiProperty()
   login: string;
 
