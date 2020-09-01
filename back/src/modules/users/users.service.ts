@@ -1,27 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+import { PasswordService } from '@/modules/password/password.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private passwordService: PasswordService,
   ) {}
-  async findAll(): Promise<User[]> {
+  public async findAll() {
     return this.usersRepository.find();
   }
-  findOne(id: string): Promise<User> {
+  public async isEmailExists(email: string) {
+    return (
+      (await this.usersRepository.count({ email, isEmailConfirmed: true })) > 0
+    );
+  }
+  public findById(id: number) {
     return this.usersRepository.findOne(id);
   }
-  async create(data: CreateUserDto) {
+  public async create(data: CreateUserDto) {
+    if (await this.isEmailExists(data.email)) {
+      throw new ConflictException('email exists');
+    }
     const entity = this.usersRepository.create(data);
+    entity.password = await this.passwordService.hashPassword(data.password);
     await this.usersRepository.save(entity);
-    return entity;
   }
-  async remove(id: string): Promise<void> {
+  public async remove(id: number) {
     await this.usersRepository.delete(id);
   }
 }

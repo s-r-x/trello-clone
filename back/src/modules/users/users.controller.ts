@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
@@ -19,19 +27,16 @@ export class UsersController {
     type: User,
   })
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const user = await this.usersService.findOne(id);
-    return user;
+  findById(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findById(id);
   }
-  @ApiCreatedResponse({
-    type: User,
-  })
+  @ApiCreatedResponse()
   @Post()
   async create(@Body() data: CreateUserDto) {
-    return this.usersService.create(data);
+    await this.usersService.create(data);
   }
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);
   }
 }

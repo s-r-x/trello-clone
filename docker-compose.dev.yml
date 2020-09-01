@@ -28,5 +28,6 @@ services:
       - "PG_USER=${PG_USER_DEV}"
       - "PG_DB=${PG_DB_DEV}"
       - "PG_HOST=pg"
+      - "PASSWORD_SALT=${PASSWORD_SALT_DEV}"
     depends_on: 
       - pg

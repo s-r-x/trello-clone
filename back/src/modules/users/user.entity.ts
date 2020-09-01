@@ -31,11 +31,15 @@ export class User {
 
   @Column({ nullable: true })
   @ApiProperty()
-  avatar: string;
+  avatar?: string;
 
-  @Column({ unique: true })
+  @Column()
   @ApiProperty()
   email: string;
+
+  @Column({ default: false })
+  @ApiProperty()
+  isEmailConfirmed: boolean;
 
   @Column({ default: true })
   @ApiProperty()
