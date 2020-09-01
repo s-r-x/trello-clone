@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 
 @Entity()
 export class User {
@@ -45,3 +45,4 @@ export class User {
   @ApiProperty()
   isActive: boolean;
 }
+export interface IPublicUser extends Omit<User, 'password'> {}

@@ -1,7 +1,7 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { User, IPublicUser } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PasswordService } from '@/modules/password/password.service';
 
@@ -22,6 +22,10 @@ export class UsersService {
     return (
       (await this.usersRepository.count({ email, isEmailConfirmed: true })) > 0
     );
+  }
+  public extractPublicData(user: User): IPublicUser {
+    const { password: _p, ...rest } = user;
+    return rest;
   }
   public findById(id: number) {
     return this.usersRepository.findOne(id);
