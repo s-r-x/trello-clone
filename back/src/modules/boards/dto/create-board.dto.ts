@@ -12,6 +12,8 @@ export class CreateBoardDto {
   private: boolean;
 
   @IsMongoId()
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+  })
   owner: ObjectId;
 }

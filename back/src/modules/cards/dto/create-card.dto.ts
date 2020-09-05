@@ -4,11 +4,15 @@ import { ObjectId } from '@/typings';
 
 export class CreateCardDto {
   @IsMongoId()
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+  })
   list: ObjectId;
 
   @IsMongoId()
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+  })
   board: ObjectId;
 
   @IsString()

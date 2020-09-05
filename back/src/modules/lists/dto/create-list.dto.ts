@@ -12,10 +12,14 @@ export class CreateListDto {
   slot: number;
 
   @IsMongoId()
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+  })
   board: ObjectId;
 
   @IsMongoId()
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+  })
   creator: ObjectId;
 }
