@@ -3,6 +3,7 @@ import { Board } from './schemas/board.schema';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ObjectId } from '@/typings';
 
 @Injectable()
 export class BoardsService {
@@ -13,6 +14,14 @@ export class BoardsService {
   }
   public findById(id: number) {
     return this.boardModel.findById(id);
+  }
+  public isUserAllowedToCreateList(user: ObjectId, board: ObjectId) {
+    return this.boardModel.exists({
+      _id: board,
+      members: {
+        $in: [user],
+      },
+    });
   }
   public async create(data: CreateBoardDto) {
     const board = new this.boardModel(data);

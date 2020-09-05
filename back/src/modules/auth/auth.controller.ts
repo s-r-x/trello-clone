@@ -25,10 +25,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async profile(@Req() req: IRequestWithUserId) {
-    const user = await this.usersService
-      .findById(req.user)
-      .select('-password')
-      .lean();
+    const user = await this.usersService.findById(req.user);
     return user;
   }
 }

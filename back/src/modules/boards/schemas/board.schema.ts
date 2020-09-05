@@ -22,11 +22,20 @@ export class Board extends Document {
 
   @Prop({
     ref: 'User',
+    index: true,
   })
   @ApiProperty({
     type: String,
   })
   owner: Types.ObjectId;
+
+  @Prop({
+    ref: 'User',
+  })
+  @ApiProperty({
+    type: [String],
+  })
+  members: Types.ObjectId[];
 }
 
 export const BoardSchema = SchemaFactory.createForClass(Board);

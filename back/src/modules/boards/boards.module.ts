@@ -17,5 +17,6 @@ import { MongooseModule } from '@nestjs/mongoose';
   ],
   controllers: [BoardsController],
   providers: [BoardsService],
+  exports: [BoardsService],
 })
 export class BoardsModule {}

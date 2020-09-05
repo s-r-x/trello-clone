@@ -1,5 +1,6 @@
 import { IsString, IsBoolean, IsMongoId } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { ObjectId } from '@/typings';
 
 export class CreateBoardDto {
   @IsString()
@@ -12,5 +13,5 @@ export class CreateBoardDto {
 
   @IsMongoId()
   @ApiProperty()
-  owner: string;
+  owner: ObjectId;
 }

@@ -12,6 +12,7 @@ import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { CreateBoardGuard } from './guards/create-board.guard';
 import { Board } from './schemas/board.schema';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 
 @Controller('boards')
 @ApiTags('boards')
@@ -35,7 +36,7 @@ export class BoardsController {
   }
 
   @Post()
-  @UseGuards(CreateBoardGuard)
+  @UseGuards(JwtAuthGuard, CreateBoardGuard)
   create(@Body() data: CreateBoardDto) {
     return this.boardsService.create(data);
   }

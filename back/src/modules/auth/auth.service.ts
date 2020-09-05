@@ -28,7 +28,7 @@ export class AuthService {
     }
   }
   public async login(user: User) {
-    const payload: ITokenPayload = { login: user.login, sub: user.id };
+    const payload: ITokenPayload = { login: user.login, sub: user._id };
     return {
       accessToken: this.jwtService.sign(payload, {
         expiresIn: JWT_EXPIRES,
