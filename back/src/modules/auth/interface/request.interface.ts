@@ -1,8 +1,8 @@
 import { Request } from '@nestjs/common';
-import { IPublicUser } from '@/modules/users/user.entity';
+import { User } from '@/modules/users/schemas/user.schema';
 
 export interface IRequestWithUser extends Request {
-  user: IPublicUser;
+  user: User;
 }
 export interface IRequestWithUserId extends Request {
   user: number;

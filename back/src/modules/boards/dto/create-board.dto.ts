@@ -1,4 +1,4 @@
-import { IsString, IsBoolean } from 'class-validator';
+import { IsString, IsBoolean, IsMongoId } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBoardDto {
@@ -9,4 +9,8 @@ export class CreateBoardDto {
   @IsBoolean()
   @ApiProperty()
   private: boolean;
+
+  @IsMongoId()
+  @ApiProperty()
+  owner: string;
 }

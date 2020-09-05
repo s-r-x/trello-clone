@@ -1,37 +1,31 @@
 import { Injectable, ConflictException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User, IPublicUser } from './user.entity';
+import { User } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PasswordService } from '@/modules/password/password.service';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    @InjectModel(User.name)
+    private userModel: Model<User>,
     private passwordService: PasswordService,
   ) {}
   public async findAll() {
-    return this.usersRepository.find();
+    return this.userModel.find({});
   }
   public async isLoginExists(login: string) {
-    return (await this.usersRepository.count({ login })) > 0;
+    return this.userModel.exists({ login });
   }
   public async isEmailExists(email: string) {
-    return (
-      (await this.usersRepository.count({ email, isEmailConfirmed: true })) > 0
-    );
-  }
-  public extractPublicData(user: User): IPublicUser {
-    const { password: _p, ...rest } = user;
-    return rest;
+    return this.userModel.exists({ email, isEmailConfirmed: true });
   }
   public findById(id: number) {
-    return this.usersRepository.findOne(id);
+    return this.userModel.findById(id);
   }
   public findByLogin(login: string) {
-    return this.usersRepository.findOne({ login });
+    return this.userModel.findOne({ login });
   }
   public async create(data: CreateUserDto) {
     if (await this.isEmailExists(data.email)) {
@@ -40,11 +34,11 @@ export class UsersService {
     if (await this.isLoginExists(data.login)) {
       throw new ConflictException('login exists');
     }
-    const entity = this.usersRepository.create(data);
-    entity.password = await this.passwordService.hashPassword(data.password);
-    await this.usersRepository.save(entity);
+    const user = new this.userModel(data);
+    user.password = await this.passwordService.hashPassword(data.password);
+    await user.save();
   }
   public async remove(id: number) {
-    await this.usersRepository.delete(id);
+    await this.userModel.deleteOne({ _id: id });
   }
 }

@@ -10,7 +10,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
-import { User } from './user.entity';
+import { User } from './schemas/user.schema';
 
 @ApiTags('users')
 @Controller('users')

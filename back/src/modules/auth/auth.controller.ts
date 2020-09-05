@@ -12,7 +12,10 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService, private usersService: UsersService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
   @UseGuards(LocalAuthGuard)
   @Post('login')
   login(@Req() req: IRequestWithUser) {
@@ -22,7 +25,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async profile(@Req() req: IRequestWithUserId) {
-    const user = await this.usersService.findById(req.user);
-    return this.usersService.extractPublicData(user);
+    const user = await this.usersService
+      .findById(req.user)
+      .select('-password')
+      .lean();
+    return user;
   }
 }

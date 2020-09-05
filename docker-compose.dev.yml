@@ -1,15 +1,11 @@
 version: "3"
 services:
-  pg:
-    container_name: trello-pg
-    image: postgres
-    restart: unless-stopped
+  mongo:
+    container_name: trello-mongo
+    image: "mongo:4.2.7-bionic"
     volumes:
-      - /var/lib/postgresql/data
-    environment: 
-      - "POSTGRES_PASSWORD=${PG_PASSWORD_DEV}"
-      - "POSTGRES_USER=${PG_USER_DEV}"
-      - "POSTGRES_DB=${PG_DB_DEV}"
+      - /data/db
+    restart: unless-stopped
   back:
     container_name: trello-back
     restart: unless-stopped
@@ -24,11 +20,8 @@ services:
     environment:
       - "NODE_ENV=development"
       - "PORT=${API_PORT}"
-      - "PG_PASSWORD=${PG_PASSWORD_DEV}"
-      - "PG_USER=${PG_USER_DEV}"
-      - "PG_DB=${PG_DB_DEV}"
-      - "PG_HOST=pg"
       - "PASSWORD_SALT=${PASSWORD_SALT_DEV}"
       - "JWT_SECRET=${JWT_SECRET_DEV}"
-    depends_on: 
-      - pg
+      - "MONGO_URI=${MONGO_URI_DEV}"
+    depends_on:
+      - mongo
