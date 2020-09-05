@@ -5,6 +5,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateCardDto } from './dto/create-card.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateCardGuard } from './guards/create-card.guard';
+import { ObjectIdParamGuard } from '@/common/guards/objectid-param.guard';
 
 @Controller('cards')
 @ApiTags('cards')
@@ -16,6 +17,7 @@ export class CardsController {
   }
 
   @Get(':id')
+  @UseGuards(ObjectIdParamGuard)
   findById(@Param('id') id: ObjectId) {
     return this.cardsService.findById(id);
   }

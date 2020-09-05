@@ -6,8 +6,8 @@ import { CreateBoardGuard } from './guards/create-board.guard';
 import { Board } from './schemas/board.schema';
 import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 import { GetBoardGuard } from './guards/get-board.guard';
-import { ParseObjectIdPipe } from '@/pipes/parse-objectid.pipe';
 import { ObjectId } from '@/typings';
+import { ObjectIdParamGuard } from '@/common/guards/objectid-param.guard';
 
 @Controller('boards')
 @ApiTags('boards')
@@ -26,8 +26,8 @@ export class BoardsController {
     type: Board,
   })
   @Get(':id')
-  @UseGuards(JwtAuthGuard, GetBoardGuard)
-  findById(@Param('id', ParseObjectIdPipe) id: ObjectId) {
+  @UseGuards(ObjectIdParamGuard, JwtAuthGuard, GetBoardGuard)
+  findById(@Param('id') id: ObjectId) {
     return this.boardsService.findById(id);
   }
 
