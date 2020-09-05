@@ -17,5 +17,6 @@ import { BoardsModule } from '@/modules/boards/boards.module';
   ],
   controllers: [ListsController],
   providers: [ListsService],
+  exports: [ListsService],
 })
 export class ListsModule {}

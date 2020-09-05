@@ -4,9 +4,11 @@ import { CardsController } from './cards.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Card, CardSchema } from './schemas/card.schema';
 import { BoardsModule } from '@/modules/boards/boards.module';
+import { ListsModule } from '../lists/lists.module';
 
 @Module({
   imports: [
+    ListsModule,
     BoardsModule,
     MongooseModule.forFeature([
       {
