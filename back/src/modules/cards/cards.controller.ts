@@ -4,6 +4,7 @@ import { ObjectId } from '@/typings';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateCardDto } from './dto/create-card.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateCardGuard } from './guards/create-card.guard';
 
 @Controller('cards')
 @ApiTags('cards')
@@ -20,7 +21,7 @@ export class CardsController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, CreateCardGuard)
   create(@Body() data: CreateCardDto) {
     return this.cardsService.create(data);
   }
