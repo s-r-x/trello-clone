@@ -18,10 +18,10 @@ export class CreateCardGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
     const user: ObjectId = req.user;
-    const body: CreateCardDto = req.body;
+    const { list, board }: CreateCardDto = req.body;
     const [writeAllowed, listExists] = await Promise.all([
-      this.boardsService.isUserAllowedToWrite(user, body.board),
-      this.listsService.isExists({ board: body.board }),
+      this.boardsService.isUserAllowedToWrite(user, board),
+      this.listsService.isExists({ _id: list, board }),
     ]);
     return writeAllowed && listExists;
   }

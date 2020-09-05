@@ -16,7 +16,7 @@ export class BoardsService {
     return this.boardModel.findById(id);
   }
   public isExists(query: TAnyDict) {
-    return this.isExists(query);
+    return this.boardModel.exists(query);
   }
   public isUserAllowedToRead(user: ObjectId, board: ObjectId) {
     if (user) {

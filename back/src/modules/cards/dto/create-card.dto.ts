@@ -1,14 +1,15 @@
 import { IsString, IsMongoId } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { ObjectId } from '@/typings';
 
 export class CreateCardDto {
   @IsMongoId()
   @ApiProperty()
-  list: string;
+  list: ObjectId;
 
   @IsMongoId()
   @ApiProperty()
-  board: string;
+  board: ObjectId;
 
   @IsString()
   @ApiProperty()
