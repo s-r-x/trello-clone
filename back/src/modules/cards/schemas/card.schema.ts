@@ -14,8 +14,20 @@ export class Card extends Document {
   })
   list: Types.ObjectId;
 
+  @Prop({
+    ref: 'Board',
+    index: true,
+    required: true,
+  })
+  @ApiProperty({
+    type: String,
+  })
+  board: Types.ObjectId;
+
   @Prop()
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   desc: string;
 
   @Prop({

@@ -7,10 +7,17 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
+    MongooseModule.forFeatureAsync([
       {
         name: Board.name,
-        schema: BoardSchema,
+        useFactory: () => {
+          BoardSchema.virtual('cards', {
+            ref: 'Card',
+            localField: '_id',
+            foreignField: 'board',
+          });
+          return BoardSchema;
+        },
       },
     ]),
     UsersModule,

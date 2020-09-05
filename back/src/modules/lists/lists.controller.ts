@@ -4,8 +4,10 @@ import { CreateListDto } from './dto/create-list.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateListGuard } from './guards/create-list.guard';
 import { ObjectId } from '@/typings';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('lists')
+@ApiTags('lists')
 export class ListsController {
   constructor(private listsService: ListsService) {}
 
@@ -14,10 +16,12 @@ export class ListsController {
   create(@Body() data: CreateListDto) {
     return this.listsService.create(data);
   }
+
   @Get()
   findAll() {
     return this.listsService.findAll();
   }
+
   @Get(':id')
   findById(@Param('id') id: ObjectId) {
     return this.listsService.findById(id);

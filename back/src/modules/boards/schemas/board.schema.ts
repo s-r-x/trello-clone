@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { Card } from '@/modules/cards/schemas/card.schema';
 
 @Schema()
 export class Board extends Document {
@@ -36,6 +37,11 @@ export class Board extends Document {
     type: [String],
   })
   members: Types.ObjectId[];
+
+  @ApiProperty({
+    type: [Card],
+  })
+  cards?: Card[];
 }
 
 export const BoardSchema = SchemaFactory.createForClass(Board);

@@ -12,10 +12,32 @@ export class BoardsService {
   public async findAll() {
     return this.boardModel.find({}).populate('owner');
   }
-  public findById(id: number) {
+  public findById(id: ObjectId) {
     return this.boardModel.findById(id);
   }
-  public isUserAllowedToCreateList(user: ObjectId, board: ObjectId) {
+  isUserAllowedToRead(user: ObjectId, board: ObjectId) {
+    if (user) {
+      return this.boardModel.exists({
+        _id: board,
+        $or: [
+          {
+            private: false,
+          },
+          {
+            members: {
+              $in: [user],
+            },
+          },
+        ],
+      });
+    } else {
+      return this.boardModel.exists({
+        _id: board,
+        private: false,
+      });
+    }
+  }
+  public isUserAllowedToWrite(user: ObjectId, board: ObjectId) {
     return this.boardModel.exists({
       _id: board,
       members: {

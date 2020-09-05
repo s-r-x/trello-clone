@@ -1,4 +1,27 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param, Post, UseGuards, Body } from '@nestjs/common';
+import { CardsService } from './cards.service';
+import { ObjectId } from '@/typings';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CreateCardDto } from './dto/create-card.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('cards')
-export class CardsController {}
+@ApiTags('cards')
+export class CardsController {
+  constructor(private cardsService: CardsService) {}
+  @Get()
+  findAll() {
+    return this.cardsService.findAll();
+  }
+
+  @Get(':id')
+  findById(@Param('id') id: ObjectId) {
+    return this.cardsService.findById(id);
+  }
+
+  @Post()
+  @UseGuards(JwtAuthGuard)
+  create(@Body() data: CreateCardDto) {
+    return this.cardsService.create(data);
+  }
+}

@@ -1,4 +1,6 @@
+import { ObjectId } from "@/typings";
+
 export interface ITokenPayload {
-  sub: number;
+  sub: ObjectId;
   login: string;
 }
