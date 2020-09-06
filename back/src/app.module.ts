@@ -5,8 +5,8 @@ import { UsersModule } from './modules/users/users.module';
 import { BoardsModule } from './modules/boards/boards.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MONGO_URI, mongoConfig } from './config/db';
-//import { ListsModule } from './modules/lists/lists.module';
-//import { CardsModule } from './modules/cards/cards.module';
+import { ListsModule } from './modules/lists/lists.module';
+import { CardsModule } from './modules/cards/cards.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 
@@ -20,8 +20,8 @@ import { join } from 'path';
     //AuthModule,
     UsersModule,
     BoardsModule,
-    //ListsModule,
-    //CardsModule,
+    ListsModule,
+    CardsModule,
   ],
 })
 export class AppModule {}

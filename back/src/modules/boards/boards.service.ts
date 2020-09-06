@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Board } from './schemas/board.schema';
+import { BoardDocument } from './schemas/board.schema';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -7,12 +7,14 @@ import { ObjectId, TAnyDict } from '@/typings';
 
 @Injectable()
 export class BoardsService {
-  constructor(@InjectModel(Board.name) private boardModel: Model<Board>) {}
+  constructor(
+    @InjectModel(BoardDocument.name) private boardModel: Model<BoardDocument>,
+  ) {}
 
   public async findMany(query?: TAnyDict) {
     return this.boardModel.find(query);
   }
-  public findById(id: ObjectId) {
+  public async findById(id: ObjectId) {
     return this.boardModel.findById(id);
   }
   public isExists(query: TAnyDict) {

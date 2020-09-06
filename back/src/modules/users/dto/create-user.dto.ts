@@ -1,16 +1,20 @@
 import { IsString, IsEmail } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { Field, InputType } from '@nestjs/graphql';
 
+@InputType()
 export class CreateUserDto {
   @IsString()
-  @ApiProperty()
+  @Field()
   login: string;
 
   @IsEmail()
-  @ApiProperty()
+  @Field()
   email: string;
 
   @IsString()
-  @ApiProperty()
+  @Field()
   password: string;
 }
+export type TGraphqlArgs = {
+  createUserDto: CreateUserDto;
+};

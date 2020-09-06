@@ -2,14 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Board {
-  _id: ID!
-  private: Boolean!
-  title: String!
-  bg: String
-  owner: User!
-}
-
 type User {
   _id: ID!
   login: String!
@@ -19,7 +11,31 @@ type User {
   isEmailConfirmed: Boolean!
   isActive: Boolean!
   boards: [Board!]!
+}
+
+type Board {
+  _id: ID!
+  private: Boolean!
+  title: String!
+  bg: String
   owner: User!
+  lists: [List!]!
+}
+
+type List {
+  _id: ID!
+  board: Board!
+  creator: User!
+  slot: Int!
+  title: String!
+}
+
+type Card {
+  _id: ID!
+  list: List!
+  board: Board!
+  desc: String
+  title: String!
 }
 
 type Query {
@@ -27,4 +43,18 @@ type Query {
   users: [User!]!
   board(id: String!): Board!
   boards: [Board!]!
+  list(id: String!): List!
+  lists: [List!]!
+  card(id: String!): Card!
+  cards: [Card!]!
+}
+
+type Mutation {
+  createUser(createUserDto: CreateUserDto!): User!
+}
+
+input CreateUserDto {
+  login: String!
+  email: String!
+  password: String!
 }

@@ -1,23 +1,23 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { CardsService } from './cards.service';
-import { CardsController } from './cards.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Card, CardSchema } from './schemas/card.schema';
+import { CardDocument, CardSchema } from './schemas/card.schema';
 import { BoardsModule } from '@/modules/boards/boards.module';
 import { ListsModule } from '../lists/lists.module';
+import { CardsResolver } from './resolvers/cards.resolver';
 
 @Module({
   imports: [
-    ListsModule,
-    BoardsModule,
+    forwardRef(() => ListsModule),
+    forwardRef(() => BoardsModule),
     MongooseModule.forFeature([
       {
-        name: Card.name,
+        name: CardDocument.name,
         schema: CardSchema,
       },
     ]),
   ],
-  providers: [CardsService],
-  controllers: [CardsController],
+  providers: [CardsService, CardsResolver],
+  exports: [CardsService],
 })
 export class CardsModule {}

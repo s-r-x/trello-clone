@@ -4,7 +4,7 @@ import { PasswordService } from '@/modules/password/password.service';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_EXPIRES } from '@/config/jwt';
 import { ITokenPayload } from './interface/token.interface';
-import { User } from '@/modules/users/schemas/user.schema';
+import { User } from '@/modules/users/schemas/user.graphql.schema';
 
 @Injectable()
 export class AuthService {

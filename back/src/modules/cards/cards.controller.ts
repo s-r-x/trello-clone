@@ -13,7 +13,7 @@ export class CardsController {
   constructor(private cardsService: CardsService) {}
   @Get()
   findAll() {
-    return this.cardsService.findAll();
+    return this.cardsService.findMany();
   }
 
   @Get(':id')

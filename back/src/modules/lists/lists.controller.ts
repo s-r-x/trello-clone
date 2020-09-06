@@ -20,7 +20,7 @@ export class ListsController {
 
   @Get()
   findAll() {
-    return this.listsService.findAll();
+    return 1;
   }
 
   @Get(':id')

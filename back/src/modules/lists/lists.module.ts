@@ -1,22 +1,21 @@
-import { Module } from '@nestjs/common';
-import { ListsController } from './lists.controller';
+import { Module, forwardRef } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { List, ListSchema } from './schemas/list.schema';
+import { ListSchema, ListDocument } from './schemas/list.schema';
 import { BoardsModule } from '@/modules/boards/boards.module';
+import { ListsResolver } from './resolvers/lists.resolver';
 
 @Module({
   imports: [
-    BoardsModule,
+    forwardRef(() => BoardsModule),
     MongooseModule.forFeature([
       {
-        name: List.name,
+        name: ListDocument.name,
         schema: ListSchema,
       },
     ]),
   ],
-  controllers: [ListsController],
-  providers: [ListsService],
+  providers: [ListsService, ListsResolver],
   exports: [ListsService],
 })
 export class ListsModule {}
