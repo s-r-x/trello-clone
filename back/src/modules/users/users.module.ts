@@ -3,8 +3,9 @@ import { UsersService } from './users.service';
 import { UserDocument, UserSchema } from './schemas/user.schema';
 import { PasswordModule } from '@/modules/password/password.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersResolver } from './resolvers/users.resolver';
+import { UsersResolvers } from './resolvers/users.resolvers';
 import { BoardsModule } from '../boards/boards.module';
+import { UsersMutations } from './mutations/users.mutations';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { BoardsModule } from '../boards/boards.module';
     ]),
     PasswordModule,
   ],
-  providers: [UsersService, UsersResolver],
+  providers: [UsersService, UsersResolvers, UsersMutations],
   exports: [UsersService],
 })
 export class UsersModule {}

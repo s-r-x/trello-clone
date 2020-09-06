@@ -14,9 +14,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   public async validateUser(login: string, password: string) {
-    const user = await this.usersService
-      .findByLogin(login)
-      .select('+password');
+    const user = await this.usersService.findByLogin(login).select('+password');
     if (
       user &&
       (await this.passwordService.comparePasswords(password, user.password))
@@ -29,11 +27,8 @@ export class AuthService {
   }
   public async login(user: User) {
     const payload: ITokenPayload = { login: user.login, sub: user._id };
-    return {
-      accessToken: this.jwtService.sign(payload, {
-        expiresIn: JWT_EXPIRES,
-      }),
-      user,
-    };
+    return this.jwtService.sign(payload, {
+      expiresIn: JWT_EXPIRES,
+    });
   }
 }
