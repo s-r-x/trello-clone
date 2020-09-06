@@ -1,15 +1,19 @@
-import { Mutation } from "@nestjs/graphql";
-import { AuthService } from "../auth.service";
-import { UseGuards, Req } from "@nestjs/common";
-import { LocalAuthGuard } from "../guards/local-auth.guard";
+import { Mutation, Args } from '@nestjs/graphql';
+import { AuthService } from '../auth.service';
+import { LoginDto } from '../dto/login.dto';
+import { Session } from '@/common/decorators/session.decorator';
+import { TCustomSession } from '@/typings';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class AuthMutations {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
-  @Mutation(() => String)
-  async auth() {
-    return 1;
+  @Mutation(() => String, { name: 'login' })
+  async login(
+    @Args('loginDto') loginDto: LoginDto,
+    @Session() session: TCustomSession,
+  ) {
+    return this.authService.login(loginDto, session);
   }
-
 }

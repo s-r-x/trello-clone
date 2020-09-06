@@ -51,10 +51,16 @@ type Query {
 
 type Mutation {
   createUser(createUserDto: CreateUserDto!): User!
+  login(loginDto: LoginDto!): String!
 }
 
 input CreateUserDto {
   login: String!
   email: String!
+  password: String!
+}
+
+input LoginDto {
+  login: String!
   password: String!
 }
