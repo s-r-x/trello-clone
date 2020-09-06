@@ -3,13 +3,13 @@ import { AppModule } from './app.module';
 import { PORT } from './config';
 import { ValidationPipe } from './common/pipes/validation.pipe';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as helmet from 'helmet';
+//import * as helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app
     .useGlobalPipes(new ValidationPipe())
-    .use(helmet())
+    //.use(helmet())
     .enableCors();
 
   const options = new DocumentBuilder()

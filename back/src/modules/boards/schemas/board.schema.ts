@@ -1,47 +1,38 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { ApiProperty } from '@nestjs/swagger';
-import { Card } from '@/modules/cards/schemas/card.schema';
+//import { Card } from '@/modules/cards/schemas/card.schema';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { User } from '@/modules/users/schemas/user.schema';
 
 @Schema()
+@ObjectType()
 export class Board extends Document {
+  @Prop()
+  @Field(() => ID)
+  _id: Types.ObjectId;
+
   @Prop({
     default: false,
   })
-  @ApiProperty()
+  @Field()
   private: boolean;
 
   @Prop({
     required: true,
   })
-  @ApiProperty()
+  @Field()
   title: string;
 
   @Prop()
-  @ApiProperty()
+  @Field({ nullable: true })
   bg: string;
 
   @Prop({
     ref: 'User',
     index: true,
   })
-  @ApiProperty({
-    type: String,
-  })
+  @Field(() => User)
   owner: Types.ObjectId;
-
-  @Prop({
-    ref: 'User',
-  })
-  @ApiProperty({
-    type: [String],
-  })
-  members: Types.ObjectId[];
-
-  @ApiProperty({
-    type: [Card],
-  })
-  cards?: Card[];
 }
 
 export const BoardSchema = SchemaFactory.createForClass(Board);

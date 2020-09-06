@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { PasswordService } from '@/modules/password/password.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ObjectId } from '@/typings';
 
 @Injectable()
 export class UsersService {
@@ -21,7 +22,7 @@ export class UsersService {
   public async isEmailExists(email: string) {
     return this.userModel.exists({ email, isEmailConfirmed: true });
   }
-  public findById(id: number) {
+  public findById(id: ObjectId) {
     return this.userModel.findById(id);
   }
   public findByLogin(login: string) {
@@ -38,7 +39,7 @@ export class UsersService {
     user.password = await this.passwordService.hashPassword(data.password);
     await user.save();
   }
-  public async remove(id: number) {
+  public async remove(id: ObjectId) {
     await this.userModel.deleteOne({ _id: id });
   }
 }

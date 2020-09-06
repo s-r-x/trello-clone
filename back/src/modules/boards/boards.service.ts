@@ -9,8 +9,8 @@ import { ObjectId, TAnyDict } from '@/typings';
 export class BoardsService {
   constructor(@InjectModel(Board.name) private boardModel: Model<Board>) {}
 
-  public async findAll() {
-    return this.boardModel.find({}).populate('owner');
+  public async findMany(query?: TAnyDict) {
+    return this.boardModel.find(query);
   }
   public findById(id: ObjectId) {
     return this.boardModel.findById(id);

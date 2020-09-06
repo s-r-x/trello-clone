@@ -1,37 +1,46 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { ApiProperty } from '@nestjs/swagger';
+import { Document, Types } from 'mongoose';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Board } from '@/modules/boards/schemas/board.schema';
 
 @Schema()
+@ObjectType()
 export class User extends Document {
+  @Field(() => ID)
+  @Prop()
+  _id: Types.ObjectId;
+
+  @Field()
   @Prop({
     unique: true,
     required: true,
   })
-  @ApiProperty()
   login: string;
 
+  @Field({ nullable: true })
   @Prop()
-  @ApiProperty()
   avatar: string;
 
+  @Field()
   @Prop({
     select: false,
   })
-  @ApiProperty()
   password: string;
 
+  @Field()
   @Prop()
-  @ApiProperty()
   email: string;
 
+  @Field()
   @Prop({ default: false })
-  @ApiProperty()
   isEmailConfirmed: boolean;
 
+  @Field()
   @Prop({ default: true })
-  @ApiProperty()
   isActive: boolean;
+
+  @Field(() => [Board])
+  boards: Board[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

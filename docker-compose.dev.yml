@@ -3,6 +3,9 @@ services:
   mongo:
     container_name: trello-mongo
     image: "mongo:4.2.7-bionic"
+    logging:
+      driver: none
+
     volumes:
       - /data/db
     restart: unless-stopped
