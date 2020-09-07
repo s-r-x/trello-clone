@@ -1,7 +1,12 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import {
+  Prop,
+  Schema as SchemaDecorator,
+  SchemaFactory,
+} from '@nestjs/mongoose';
+import { Document, Schema } from 'mongoose';
+import { ObjectId } from '@/typings';
 
-@Schema({
+@SchemaDecorator({
   collection: 'lists',
 })
 export class ListDocument extends Document {
@@ -9,15 +14,15 @@ export class ListDocument extends Document {
     ref: 'Board',
     index: true,
     required: true,
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
   })
-  board: string;
+  board: ObjectId;
 
   @Prop({
     ref: 'User',
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
   })
-  creator: string;
+  creator: ObjectId;
 
   @Prop({
     required: true,

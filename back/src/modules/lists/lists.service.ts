@@ -10,13 +10,13 @@ export class ListsService {
   constructor(
     @InjectModel(ListDocument.name) private listModel: Model<ListDocument>,
   ) {}
-  public findMany(query?: TAnyDict) {
+  public async findMany(query?: TAnyDict) {
     return this.listModel.find(query);
   }
-  public findById(id: ObjectId) {
+  public async findById(id: ObjectId) {
     return this.listModel.findById(id);
   }
-  public isExists(query: TAnyDict) {
+  public async isExists(query: TAnyDict) {
     return this.listModel.exists(query);
   }
   public async create(data: CreateListDto) {

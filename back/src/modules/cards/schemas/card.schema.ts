@@ -1,7 +1,12 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import {
+  Prop,
+  Schema as SchemaDecorator,
+  SchemaFactory,
+} from '@nestjs/mongoose';
+import { Document, Schema } from 'mongoose';
+import { ObjectId } from '@/typings';
 
-@Schema({
+@SchemaDecorator({
   collection: 'cards',
 })
 export class CardDocument extends Document {
@@ -9,17 +14,17 @@ export class CardDocument extends Document {
     ref: 'List',
     index: true,
     required: true,
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
   })
-  list: string;
+  list: ObjectId;
 
   @Prop({
     ref: 'Board',
     index: true,
     required: true,
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
   })
-  board: string;
+  board: ObjectId;
 
   @Prop()
   desc: string;
@@ -32,9 +37,9 @@ export class CardDocument extends Document {
   @Prop({
     ref: 'User',
     required: true,
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
   })
-  creator: string;
+  creator: ObjectId;
 }
 
 export const CardSchema = SchemaFactory.createForClass(CardDocument);

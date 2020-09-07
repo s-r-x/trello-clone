@@ -1,10 +1,11 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/modules/users/schemas/user.graphql.schema';
+import { ObjectId } from '@/typings';
 
 @ObjectType()
 export class Board {
   @Field(() => ID)
-  _id: string;
+  _id: ObjectId;
 
   @Field()
   private: boolean;
@@ -16,7 +17,7 @@ export class Board {
   bg: string;
 
   @Field(() => User)
-  owner: string;
+  owner: ObjectId;
   @Field(() => [User])
-  members: string[];
+  members: ObjectId[];
 }

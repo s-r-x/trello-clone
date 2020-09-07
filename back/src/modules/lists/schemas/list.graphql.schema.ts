@@ -1,17 +1,18 @@
 import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 import { Board } from '@/modules/boards/schemas/board.graphql.schema';
 import { User } from '@/modules/users/schemas/user.graphql.schema';
+import { ObjectId } from '@/typings';
 
 @ObjectType()
 export class List {
   @Field(() => ID)
-  _id: string;
+  _id: ObjectId;
 
   @Field(() => Board)
-  board: string;
+  board: ObjectId;
 
   @Field(() => User)
-  creator: string;
+  creator: ObjectId;
 
   @Field(() => Int)
   slot: number;
