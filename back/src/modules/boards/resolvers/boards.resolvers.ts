@@ -29,4 +29,8 @@ export class BoardsResolvers {
   async getLists(@Parent() board: Board) {
     return this.listsService.findMany({ board: board._id });
   }
+  @ResolveField('members', () => [User])
+  async getMembers(@Parent() board: Board) {
+    return this.usersService.findByIds(board.members);
+  }
 }

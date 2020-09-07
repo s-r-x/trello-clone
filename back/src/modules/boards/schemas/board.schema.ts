@@ -20,11 +20,11 @@ export class BoardDocument extends Document {
 
   @Prop({
     ref: 'User',
-    index: true,
-    type: [Types.ObjectId]
+    type: [Types.ObjectId],
   })
   owner: string;
   @Prop({
+    index: true,
     ref: 'User',
     type: [Types.ObjectId],
   })
