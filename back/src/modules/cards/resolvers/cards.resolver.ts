@@ -5,6 +5,8 @@ import { Board } from '@/modules/boards/schemas/board.graphql.schema';
 import { BoardsService } from '@/modules/boards/boards.service';
 import { List } from '@/modules/lists/schemas/list.graphql.schema';
 import { ListsService } from '@/modules/lists/lists.service';
+import { User } from '@/modules/users/schemas/user.graphql.schema';
+import { UsersService } from '@/modules/users/users.service';
 
 @Resolver(() => Card)
 export class CardsResolver {
@@ -12,6 +14,7 @@ export class CardsResolver {
     private cardsService: CardsService,
     private boardsService: BoardsService,
     private listsService: ListsService,
+    private usersService: UsersService,
   ) {}
   @Query(() => Card, { name: 'card' })
   async getCard(@Args('id') id: string): Promise<Card> {
@@ -28,5 +31,9 @@ export class CardsResolver {
   @ResolveField('list', () => List)
   async getList(@Parent() card: Card) {
     return this.listsService.findById(card.list);
+  }
+  @ResolveField('creator', () => User)
+  async getCreator(@Parent() card: Card) {
+    return this.usersService.findById(card.creator);
   }
 }
