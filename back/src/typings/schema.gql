@@ -38,6 +38,21 @@ type Card {
   desc: String
   title: String!
   creator: User!
+  commentsCount: Float!
+}
+
+type CheckList {
+  _id: ID!
+  boardId: String!
+  cardId: String!
+  title: String!
+}
+
+type CheckItem {
+  _id: ID!
+  title: String!
+  checkListId: String!
+  checked: Boolean!
 }
 
 type Query {
@@ -50,6 +65,10 @@ type Query {
   lists: [List!]!
   card(id: String!): Card!
   cards: [Card!]!
+  checkList(id: String!): CheckList!
+  checkLists: [CheckList!]!
+  checkItem(id: String!): CheckItem!
+  checkItems: [CheckItem!]!
 }
 
 type Mutation {

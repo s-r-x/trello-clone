@@ -23,4 +23,7 @@ export class Card {
 
   @Field(() => User)
   creator: ObjectId;
+
+  @Field()
+  commentsCount: number;
 }

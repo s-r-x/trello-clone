@@ -40,6 +40,9 @@ export class CardDocument extends Document {
     type: Schema.Types.ObjectId,
   })
   creator: ObjectId;
+
+  @Prop({ default: 0 })
+  commentsCount: number;
 }
 
 export const CardSchema = SchemaFactory.createForClass(CardDocument);

@@ -16,6 +16,8 @@ import * as session from 'express-session';
 import * as ConnectRedis from 'connect-redis';
 import { RedisService } from 'nestjs-redis';
 import { sessionConfig } from './config/session';
+import { CheckListsModule } from './modules/check-lists/check-lists.module';
+import { CheckItemsModule } from './modules/check-items/check-items.module';
 
 const RedisStore = ConnectRedis(session);
 
@@ -50,6 +52,8 @@ const RedisStore = ConnectRedis(session);
     BoardsModule,
     ListsModule,
     CardsModule,
+    CheckListsModule,
+    CheckItemsModule,
   ],
 })
 export class AppModule {}
