@@ -14,6 +14,13 @@ export class BoardsService {
   public async findMany(query?: TAnyDict) {
     return this.boardModel.find(query);
   }
+  public findByMembers(members: ObjectId[]) {
+    return this.findMany({
+      members: {
+        $in: members,
+      },
+    });
+  }
   public async findById(id: ObjectId) {
     return this.boardModel.findById(id);
   }

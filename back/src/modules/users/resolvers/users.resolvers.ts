@@ -32,6 +32,6 @@ export class UsersResolvers {
 
   @ResolveField('boards', () => [Board])
   async getBoards(@Parent() user: User): Promise<Board[]> {
-    return this.boardsService.findMany({ owner: user._id });
+    return this.boardsService.findByMembers([user._id]);
   }
 }
