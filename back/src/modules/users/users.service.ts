@@ -25,6 +25,13 @@ export class UsersService {
   public findById(id: ObjectId) {
     return this.userModel.findById(id);
   }
+  public findByIds(ids: ObjectId[]) {
+    return this.userModel.find({
+      _id: {
+        $in: ids,
+      },
+    });
+  }
   public findByLogin(login: string) {
     return this.userModel.findOne({ login });
   }

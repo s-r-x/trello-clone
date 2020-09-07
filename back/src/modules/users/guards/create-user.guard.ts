@@ -1,20 +1,12 @@
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  Inject,
-  ConflictException,
-} from '@nestjs/common';
-import { TGraphqlArgs } from '../dto/create-user.dto';
-import { GqlExecutionContext } from '@nestjs/graphql';
+import { Injectable, Inject, ConflictException } from '@nestjs/common';
+import { Args } from '@nestjs/graphql';
 import { UsersService } from '../users.service';
+import { CreateUserDto, createUserDtoName } from '../dto/create-user.dto';
 
 @Injectable()
-export class CreateUserGuard implements CanActivate {
+export class CreateUserGuard {
   constructor(@Inject(UsersService) private usersService: UsersService) {}
-  async canActivate(context: ExecutionContext) {
-    const ctx = GqlExecutionContext.create(context);
-    const { createUserDto: data }: TGraphqlArgs = ctx.getArgs();
+  async canActivate(@Args(createUserDtoName) data: CreateUserDto) {
     if (data.email && (await this.usersService.isEmailExists(data.email))) {
       throw new ConflictException('email exists');
     }

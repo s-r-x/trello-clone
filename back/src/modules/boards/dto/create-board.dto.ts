@@ -1,19 +1,21 @@
 import { IsString, IsBoolean, IsMongoId } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
 import { ObjectId } from '@/typings';
+import { Field, InputType } from '@nestjs/graphql';
 
+@InputType()
 export class CreateBoardDto {
   @IsString()
-  @ApiProperty()
+  @Field()
   title: string;
 
+  @Field()
   @IsBoolean()
-  @ApiProperty()
   private: boolean;
 
   @IsMongoId()
-  @ApiProperty({
-    type: String,
+  @Field(() => String, {
+    description: 'Current user id',
   })
   owner: ObjectId;
 }
+export const createBoardDtoName = 'createBoardDto';

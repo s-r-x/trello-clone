@@ -52,6 +52,7 @@ export class BoardsService {
   }
   public async create(data: CreateBoardDto) {
     const board = new this.boardModel(data);
+    board.members = [data.owner];
     await board.save();
     return board;
   }

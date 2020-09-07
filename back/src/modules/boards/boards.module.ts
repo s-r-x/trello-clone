@@ -3,8 +3,9 @@ import { BoardsService } from './boards.service';
 import { BoardDocument, BoardSchema } from './schemas/board.schema';
 import { UsersModule } from '../users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { BoardsResolver } from './resolvers/boards.resolver';
+import { BoardsResolvers } from './resolvers/boards.resolvers';
 import { ListsModule } from '../lists/lists.module';
+import { BoardsMutations } from './mutations/boards.mutations';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { ListsModule } from '../lists/lists.module';
     forwardRef(() => UsersModule),
     forwardRef(() => ListsModule),
   ],
-  providers: [BoardsService, BoardsResolver],
+  providers: [BoardsService, BoardsResolvers, BoardsMutations],
   exports: [BoardsService],
 })
 export class BoardsModule {}

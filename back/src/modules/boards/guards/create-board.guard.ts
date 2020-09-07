@@ -1,13 +1,15 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { CreateBoardDto } from '../dto/create-board.dto';
+import { Injectable } from '@nestjs/common';
+import { CreateBoardDto, createBoardDtoName } from '../dto/create-board.dto';
 import { ObjectId } from '@/typings';
+import { Args } from '@nestjs/graphql';
+import { CurrentUser } from '@/common/decorators/current-user.decorator';
 
 @Injectable()
-export class CreateBoardGuard implements CanActivate {
-  canActivate(context: ExecutionContext) {
-    const req = context.switchToHttp().getRequest();
-    const user: ObjectId = req.user;
-    const body: CreateBoardDto = req.body;
-    return user === body.owner;
+export class CreateBoardGuard {
+  canActivate(
+    @CurrentUser() userId: ObjectId,
+    @Args(createBoardDtoName) data: CreateBoardDto,
+  ) {
+    return userId === data.owner;
   }
 }

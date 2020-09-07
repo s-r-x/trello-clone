@@ -7,7 +7,7 @@ import { ListsService } from '@/modules/lists/lists.service';
 import { List } from '@/modules/lists/schemas/list.graphql.schema';
 
 @Resolver(() => Board)
-export class BoardsResolver {
+export class BoardsResolvers {
   constructor(
     private boardsService: BoardsService,
     private usersService: UsersService,

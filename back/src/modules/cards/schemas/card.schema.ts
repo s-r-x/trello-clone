@@ -9,15 +9,17 @@ export class CardDocument extends Document {
     ref: 'List',
     index: true,
     required: true,
+    type: Types.ObjectId,
   })
-  list: Types.ObjectId;
+  list: string;
 
   @Prop({
     ref: 'Board',
     index: true,
     required: true,
+    type: Types.ObjectId,
   })
-  board: Types.ObjectId;
+  board: string;
 
   @Prop()
   desc: string;

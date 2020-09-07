@@ -15,6 +15,4 @@ export class CreateUserDto {
   @Field()
   password: string;
 }
-export type TGraphqlArgs = {
-  createUserDto: CreateUserDto;
-};
+export const createUserDtoName = 'createUserDto';

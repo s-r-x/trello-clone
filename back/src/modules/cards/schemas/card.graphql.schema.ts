@@ -9,10 +9,10 @@ export class Card {
   _id: string;
 
   @Field(() => List)
-  list: Types.ObjectId;
+  list: string;
 
   @Field(() => Board)
-  board: Types.ObjectId;
+  board: string;
 
   @Field({ nullable: true })
   desc: string;

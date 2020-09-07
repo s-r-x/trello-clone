@@ -19,6 +19,7 @@ type Board {
   title: String!
   bg: String
   owner: User!
+  members: [User!]!
   lists: [List!]!
 }
 
@@ -50,8 +51,17 @@ type Query {
 }
 
 type Mutation {
+  createBoard(createBoardDto: CreateBoardDto!): Board!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
+}
+
+input CreateBoardDto {
+  title: String!
+  private: Boolean!
+
+  """Current user id"""
+  owner: String!
 }
 
 input CreateUserDto {

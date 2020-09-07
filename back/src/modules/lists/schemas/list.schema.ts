@@ -9,13 +9,15 @@ export class ListDocument extends Document {
     ref: 'Board',
     index: true,
     required: true,
+    type: Types.ObjectId,
   })
-  board: Types.ObjectId;
+  board: string;
 
   @Prop({
     ref: 'User',
+    type: Types.ObjectId,
   })
-  creator: Types.ObjectId;
+  creator: string;
 
   @Prop({
     required: true,
