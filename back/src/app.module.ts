@@ -24,6 +24,7 @@ const RedisStore = ConnectRedis(session);
     RedisModule.register(regisConfig),
     MongooseModule.forRoot(MONGO_URI, mongoConfig),
     GraphQLModule.forRoot({
+      fieldResolverEnhancers: ['guards'],
       autoSchemaFile: join(process.cwd(), 'src', 'typings', 'schema.gql'),
       playground: {
         settings: {

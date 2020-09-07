@@ -2,9 +2,10 @@ import { Mutation, Args } from '@nestjs/graphql';
 import { CreateUserDto, createUserDtoName } from '../dto/create-user.dto';
 import { UsersService } from '../users.service';
 import { User } from '../schemas/user.graphql.schema';
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, Injectable } from '@nestjs/common';
 import { CreateUserGuard } from '../guards/create-user.guard';
 
+@Injectable()
 export class UsersMutations {
   constructor(private usersService: UsersService) {}
 

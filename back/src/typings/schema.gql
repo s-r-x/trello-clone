@@ -40,6 +40,7 @@ type Card {
 }
 
 type Query {
+  me: User!
   user(id: String!): User!
   users: [User!]!
   board(id: String!): Board!

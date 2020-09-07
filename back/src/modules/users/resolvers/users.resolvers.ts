@@ -3,18 +3,10 @@ import { UsersService } from '../users.service';
 import { User } from '../schemas/user.graphql.schema';
 import { BoardsService } from '@/modules/boards/boards.service';
 import { Board } from '@/modules/boards/schemas/board.graphql.schema';
-import { CanActivate, ExecutionContext, UseGuards } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
-
-class SomeGuard implements CanActivate {
-  canActivate(context: ExecutionContext) {
-    console.log(context.switchToHttp().getRequest());
-    const ctx = GqlExecutionContext.create(context);
-    const session = ctx.getContext()
-    console.log(session.switchToHttp);
-    return true;
-  }
-}
+import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import { UseGuards } from '@nestjs/common';
+import { AuthOnlyGuard } from '@/modules/auth/guards/auth-only.guard';
+import { ObjectId } from '@/typings';
 
 @Resolver(() => User)
 export class UsersResolvers {
@@ -23,13 +15,17 @@ export class UsersResolvers {
     private boardsService: BoardsService,
   ) {}
 
+  @UseGuards(AuthOnlyGuard)
+  @Query(() => User, { name: 'me' })
+  async me(@CurrentUser() user: ObjectId) {
+    return this.usersService.findById(user);
+  }
   @Query(() => User, { name: 'user' })
   async getUser(@Args('id') id: string): Promise<User> {
     return this.usersService.findById(id);
   }
 
   @Query(() => [User], { name: 'users' })
-  @UseGuards(SomeGuard)
   async getUsers(): Promise<User[]> {
     return this.usersService.findAll();
   }
