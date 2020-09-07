@@ -13,7 +13,7 @@ export class UsersService {
     private userModel: Model<UserDocument>,
     private passwordService: PasswordService,
   ) {}
-  public async findAll() {
+  public async findMany() {
     return this.userModel.find({});
   }
   public async isLoginExists(login: string) {

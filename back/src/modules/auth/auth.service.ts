@@ -25,7 +25,7 @@ export class AuthService {
       await this.passwordService.comparePasswords(data.password, user.password)
     ) {
       session.userId = user._id;
-      return '1';
+      return `hi ${user.login}`;
     } else {
       throw new ForbiddenException('bad password');
     }

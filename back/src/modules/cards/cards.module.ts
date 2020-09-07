@@ -5,6 +5,7 @@ import { CardDocument, CardSchema } from './schemas/card.schema';
 import { BoardsModule } from '@/modules/boards/boards.module';
 import { ListsModule } from '../lists/lists.module';
 import { CardsResolver } from './resolvers/cards.resolver';
+import { CardsMutations } from './mutations/cards.mutations';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { CardsResolver } from './resolvers/cards.resolver';
       },
     ]),
   ],
-  providers: [CardsService, CardsResolver],
+  providers: [CardsService, CardsResolver, CardsMutations],
   exports: [CardsService],
 })
 export class CardsModule {}

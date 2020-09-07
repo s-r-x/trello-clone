@@ -4,18 +4,18 @@ import {
   CanActivate,
   ExecutionContext,
 } from '@nestjs/common';
-import { CreateListDto } from '../dto/create-list.dto';
+import { CreateListDto, createListDtoName } from '../dto/create-list.dto';
 import { BoardsService } from '@/modules/boards/boards.service';
-import { ObjectId } from '@/typings';
+import { currentUserSelector } from '@/common/selectors/current-user.selector';
+import { gqlArgsSelector } from '@/common/selectors/args.gql.selector';
 
 @Injectable()
 export class CreateListGuard implements CanActivate {
   constructor(@Inject(BoardsService) private boardsService: BoardsService) {}
-  async canActivate(context: ExecutionContext) {
-    const req = context.switchToHttp().getRequest();
-    const user: ObjectId = req.user;
-    const body: CreateListDto = req.body;
-    if (user !== body.creator) return false;
-    return await this.boardsService.isUserAllowedToWrite(user, body.board);
+  async canActivate(ctx: ExecutionContext) {
+    const user = currentUserSelector(ctx);
+    const data: CreateListDto = gqlArgsSelector(ctx)[createListDtoName];
+    if (user !== data.creator) return false;
+    return await this.boardsService.isUserAllowedToWrite(user, data.board);
   }
 }

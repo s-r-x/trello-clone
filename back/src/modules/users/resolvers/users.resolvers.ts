@@ -27,7 +27,7 @@ export class UsersResolvers {
 
   @Query(() => [User], { name: 'users' })
   async getUsers(): Promise<User[]> {
-    return this.usersService.findAll();
+    return this.usersService.findMany();
   }
 
   @ResolveField('boards', () => [Board])

@@ -1,21 +1,22 @@
 import { IsString, IsMongoId } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
-import { ObjectId } from '@/typings';
+import { InputType, Field } from '@nestjs/graphql';
 
+@InputType()
 export class CreateCardDto {
   @IsMongoId()
-  @ApiProperty({
-    type: String,
-  })
-  list: ObjectId;
+  @Field()
+  list: string;
 
   @IsMongoId()
-  @ApiProperty({
-    type: String,
-  })
-  board: ObjectId;
+  @Field()
+  board: string;
 
   @IsString()
-  @ApiProperty()
+  @Field()
   title: string;
+
+  @IsMongoId()
+  @Field()
+  creator: string;
 }
+export const createCardDtoName = 'createCardDto';

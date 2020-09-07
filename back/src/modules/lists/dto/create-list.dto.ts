@@ -1,25 +1,22 @@
 import { IsString, IsMongoId, IsNumber } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
-import { ObjectId } from '@/typings';
+import { InputType, Field } from '@nestjs/graphql';
 
+@InputType()
 export class CreateListDto {
   @IsString()
-  @ApiProperty()
+  @Field()
   title: string;
 
   @IsNumber()
-  @ApiProperty()
+  @Field()
   slot: number;
 
   @IsMongoId()
-  @ApiProperty({
-    type: String,
-  })
-  board: ObjectId;
+  @Field()
+  board: string;
 
   @IsMongoId()
-  @ApiProperty({
-    type: String,
-  })
-  creator: ObjectId;
+  @Field()
+  creator: string;
 }
+export const createListDtoName = 'createListDto';

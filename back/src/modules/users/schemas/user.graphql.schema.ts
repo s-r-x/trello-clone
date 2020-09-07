@@ -12,9 +12,6 @@ export class User {
   avatar: string;
 
   @Field()
-  password: string;
-
-  @Field()
   email: string;
 
   @Field()

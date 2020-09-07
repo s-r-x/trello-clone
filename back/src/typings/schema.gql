@@ -6,7 +6,6 @@ type User {
   _id: ID!
   login: String!
   avatar: String
-  password: String!
   email: String!
   isEmailConfirmed: Boolean!
   isActive: Boolean!
@@ -37,6 +36,7 @@ type Card {
   board: Board!
   desc: String
   title: String!
+  creator: User!
 }
 
 type Query {
@@ -52,9 +52,18 @@ type Query {
 }
 
 type Mutation {
+  createList(createListDto: CreateListDto!): List!
   createBoard(createBoardDto: CreateBoardDto!): Board!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
+  createCard(createListDto: CreateCardDto!): Card!
+}
+
+input CreateListDto {
+  title: String!
+  slot: Float!
+  board: String!
+  creator: String!
 }
 
 input CreateBoardDto {
@@ -74,4 +83,11 @@ input CreateUserDto {
 input LoginDto {
   login: String!
   password: String!
+}
+
+input CreateCardDto {
+  list: String!
+  board: String!
+  title: String!
+  creator: String!
 }

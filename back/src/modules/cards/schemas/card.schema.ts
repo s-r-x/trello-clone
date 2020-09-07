@@ -28,6 +28,13 @@ export class CardDocument extends Document {
     required: true,
   })
   title: string;
+
+  @Prop({
+    ref: 'User',
+    required: true,
+    type: Types.ObjectId,
+  })
+  creator: string;
 }
 
 export const CardSchema = SchemaFactory.createForClass(CardDocument);

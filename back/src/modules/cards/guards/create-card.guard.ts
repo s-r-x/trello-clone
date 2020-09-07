@@ -5,9 +5,11 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { BoardsService } from '@/modules/boards/boards.service';
-import { ObjectId } from '@/typings';
 import { CreateCardDto } from '../dto/create-card.dto';
 import { ListsService } from '@/modules/lists/lists.service';
+import { currentUserSelector } from '@/common/selectors/current-user.selector';
+import { gqlArgsSelector } from '@/common/selectors/args.gql.selector';
+import { createListDtoName } from '@/modules/lists/dto/create-list.dto';
 
 @Injectable()
 export class CreateCardGuard implements CanActivate {
@@ -15,13 +17,15 @@ export class CreateCardGuard implements CanActivate {
     @Inject(BoardsService) private boardsService: BoardsService,
     @Inject(ListsService) private listsService: ListsService,
   ) {}
-  async canActivate(context: ExecutionContext) {
-    const req = context.switchToHttp().getRequest();
-    const user: ObjectId = req.user;
-    const { list, board }: CreateCardDto = req.body;
+  async canActivate(ctx: ExecutionContext) {
+    const user = currentUserSelector(ctx);
+    const data: CreateCardDto = gqlArgsSelector(ctx)[createListDtoName];
+    if (data.creator !== user) {
+      return false;
+    }
     const [writeAllowed, listExists] = await Promise.all([
-      this.boardsService.isUserAllowedToWrite(user, board),
-      this.listsService.isExists({ _id: list, board }),
+      this.boardsService.isUserAllowedToWrite(user, data.board),
+      this.listsService.isExists({ _id: data.list, board: data.board }),
     ]);
     return writeAllowed && listExists;
   }

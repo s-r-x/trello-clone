@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ListSchema, ListDocument } from './schemas/list.schema';
 import { BoardsModule } from '@/modules/boards/boards.module';
 import { ListsResolver } from './resolvers/lists.resolver';
+import { ListsMutations } from './mutations/lists.mutations';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ListsResolver } from './resolvers/lists.resolver';
       },
     ]),
   ],
-  providers: [ListsService, ListsResolver],
+  providers: [ListsService, ListsResolver, ListsMutations],
   exports: [ListsService],
 })
 export class ListsModule {}
