@@ -4,15 +4,14 @@ import { CreateBoardDto } from './dto/create-board.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ObjectId, TAnyDict } from '@/typings';
+import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
 
 @Injectable()
-export class BoardsService {
+export class BoardsService extends AbstractCRUDService<BoardDocument> {
   constructor(
-    @InjectModel(BoardDocument.name) private boardModel: Model<BoardDocument>,
-  ) {}
-
-  public async findMany(query?: TAnyDict) {
-    return this.boardModel.find(query);
+    @InjectModel(BoardDocument.name) protected model: Model<BoardDocument>,
+  ) {
+    super();
   }
   public findByMembers(members: ObjectId[]) {
     return this.findMany({
@@ -20,12 +19,6 @@ export class BoardsService {
         $in: members,
       },
     });
-  }
-  public async findById(id: ObjectId) {
-    return this.boardModel.findById(id);
-  }
-  public isExists(query: TAnyDict) {
-    return this.boardModel.exists(query);
   }
   public isUserAllowedToRead(user: ObjectId, board: ObjectId) {
     if (user) {
@@ -58,7 +51,7 @@ export class BoardsService {
     });
   }
   public async create(data: CreateBoardDto) {
-    const board = new this.boardModel(data);
+    const board = new this.model(data);
     board.members = [data.owner];
     await board.save();
     return board;

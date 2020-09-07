@@ -3,25 +3,16 @@ import { ListDocument } from './schemas/list.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateListDto } from './dto/create-list.dto';
-import { ObjectId, TAnyDict } from '@/typings';
+import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
 
 @Injectable()
-export class ListsService {
+export class ListsService extends AbstractCRUDService<ListDocument> {
   constructor(
-    @InjectModel(ListDocument.name) private listModel: Model<ListDocument>,
-  ) {}
-  public async findMany(query?: TAnyDict) {
-    return this.listModel.find(query);
-  }
-  public async findById(id: ObjectId) {
-    return this.listModel.findById(id);
-  }
-  public async isExists(query: TAnyDict) {
-    return this.listModel.exists(query);
+    @InjectModel(ListDocument.name) protected model: Model<ListDocument>,
+  ) {
+    super();
   }
   public async create(data: CreateListDto) {
-    const list = new this.listModel(data);
-    await list.save();
-    return list;
+    return super.create(data);
   }
 }

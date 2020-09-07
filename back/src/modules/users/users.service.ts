@@ -4,44 +4,27 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { PasswordService } from '@/modules/password/password.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ObjectId } from '@/typings';
+import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
 
 @Injectable()
-export class UsersService {
+export class UsersService extends AbstractCRUDService<UserDocument> {
   constructor(
     @InjectModel(UserDocument.name)
-    private userModel: Model<UserDocument>,
+    protected model: Model<UserDocument>,
     private passwordService: PasswordService,
-  ) {}
-  public async findMany() {
-    return this.userModel.find({});
+  ) {
+    super();
   }
   public async isLoginExists(login: string) {
-    return this.userModel.exists({ login });
+    return this.isExists({ login });
   }
   public async isEmailExists(email: string) {
-    return this.userModel.exists({ email, isEmailConfirmed: true });
-  }
-  public findById(id: ObjectId) {
-    return this.userModel.findById(id);
-  }
-  public findByIds(ids: ObjectId[]) {
-    return this.userModel.find({
-      _id: {
-        $in: ids,
-      },
-    });
-  }
-  public findByLogin(login: string) {
-    return this.userModel.findOne({ login });
+    return this.isExists({ email, isEmailConfirmed: true });
   }
   public async create(data: CreateUserDto) {
-    const user = new this.userModel(data);
+    const user = new this.model(data);
     user.password = await this.passwordService.hashPassword(data.password);
     await user.save();
     return user;
-  }
-  public async remove(id: ObjectId) {
-    await this.userModel.deleteOne({ _id: id });
   }
 }

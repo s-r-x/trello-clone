@@ -15,9 +15,12 @@ export class AuthService {
     private passwordService: PasswordService,
   ) {}
   public async login(data: LoginDto, session: TCustomSession) {
-    const user = await this.usersService
-      .findByLogin(data.login)
-      .select('+password');
+    const user = await this.usersService.findOne(
+      { login: data.login },
+      {
+        select: '+password',
+      },
+    );
     if (!user) {
       throw new NotFoundException('user not found');
     }
