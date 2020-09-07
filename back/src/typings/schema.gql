@@ -28,6 +28,7 @@ type List {
   creator: User!
   slot: Int!
   title: String!
+  cards: Card!
 }
 
 type Card {
@@ -53,16 +54,23 @@ type Query {
 
 type Mutation {
   createList(createListDto: CreateListDto!): List!
+  createCard(createListDto: CreateCardDto!): Card!
   createBoard(createBoardDto: CreateBoardDto!): Board!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
-  createCard(createListDto: CreateCardDto!): Card!
 }
 
 input CreateListDto {
   title: String!
   slot: Float!
   board: String!
+  creator: String!
+}
+
+input CreateCardDto {
+  list: String!
+  board: String!
+  title: String!
   creator: String!
 }
 
@@ -83,11 +91,4 @@ input CreateUserDto {
 input LoginDto {
   login: String!
   password: String!
-}
-
-input CreateCardDto {
-  list: String!
-  board: String!
-  title: String!
-  creator: String!
 }
