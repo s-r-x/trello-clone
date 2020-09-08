@@ -17,4 +17,10 @@ export class CheckItemsMutations {
   async createCheckItem(@Args(createCheckItemDtoName) dto: CreateCheckItemDto) {
     return this.checkItemsService.create(dto);
   }
+
+  @UseGuards(AuthOnlyGuard)
+  @Mutation(() => Number, { name: 'removeCheckItem' })
+  async removeCheckItem(@Args('id') id: string) {
+    return this.checkItemsService.removeCheckItem(id);
+  }
 }

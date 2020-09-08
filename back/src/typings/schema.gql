@@ -95,6 +95,8 @@ type Mutation {
   login(loginDto: LoginDto!): String!
   createCheckList(createCheckListDto: CreateCheckListDto!): CheckList!
   removeCheckList(id: String!): Float!
+  createCheckItem(createCheckItemDto: CreateCheckItemDto!): CheckItem!
+  removeCheckItem(id: String!): Float!
 }
 
 input CreateListDto {
@@ -151,4 +153,10 @@ input CreateCheckListDto {
   title: String!
   boardId: String!
   cardId: String!
+}
+
+input CreateCheckItemDto {
+  title: String!
+  checked: Boolean!
+  checkListId: String!
 }

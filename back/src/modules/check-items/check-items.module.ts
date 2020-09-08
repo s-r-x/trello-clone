@@ -6,6 +6,7 @@ import {
   CheckItemSchema,
 } from './schemas/check-item.schema';
 import { CheckItemsResolvers } from './resolvers/check-items.resolvers';
+import { CheckItemsMutations } from './mutations/check-items.mutations';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { CheckItemsResolvers } from './resolvers/check-items.resolvers';
       },
     ]),
   ],
-  providers: [CheckItemsService, CheckItemsResolvers],
+  providers: [CheckItemsService, CheckItemsResolvers, CheckItemsMutations],
 })
 export class CheckItemsModule {}
