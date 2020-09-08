@@ -5,11 +5,11 @@ import { InputType, Field } from '@nestjs/graphql';
 export class CreateCardDto {
   @IsMongoId()
   @Field()
-  list: string;
+  listId: string;
 
   @IsMongoId()
   @Field()
-  board: string;
+  boardId: string;
 
   @IsString()
   @Field()
@@ -17,6 +17,6 @@ export class CreateCardDto {
 
   @IsMongoId()
   @Field()
-  creator: string;
+  creatorId: string;
 }
 export const createCardDtoName = 'createCardDto';

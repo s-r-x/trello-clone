@@ -16,13 +16,13 @@ export class ListDocument extends Document {
     required: true,
     type: Schema.Types.ObjectId,
   })
-  board: ObjectId;
+  boardId: ObjectId;
 
   @Prop({
     ref: 'User',
     type: Schema.Types.ObjectId,
   })
-  creator: ObjectId;
+  creatorId: ObjectId;
 
   @Prop({
     required: true,

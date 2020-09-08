@@ -15,7 +15,7 @@ export class CreateListGuard implements CanActivate {
   async canActivate(ctx: ExecutionContext) {
     const user = currentUserSelector(ctx);
     const data: CreateListDto = gqlArgsSelector(ctx)[createListDtoName];
-    if (user !== data.creator) return false;
-    return await this.boardsService.isUserAllowedToWrite(user, data.board);
+    if (user !== data.creatorId) return false;
+    return await this.boardsService.isUserAllowedToWrite(user, data.boardId);
   }
 }

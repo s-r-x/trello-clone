@@ -17,28 +17,36 @@ type Board {
   private: Boolean!
   title: String!
   bg: String
+  membersIds: [String!]!
+  ownerId: String!
+  closed: Boolean!
   owner: User!
-  members: [User!]!
   lists: [List!]!
+  members: [User!]!
 }
 
 type List {
   _id: ID!
-  board: Board!
-  creator: User!
+  boardId: String!
+  creatorId: String!
   slot: Int!
   title: String!
+  board: Board!
   cards: Card!
+  creator: User!
 }
 
 type Card {
   _id: ID!
-  list: List!
-  board: Board!
+  listId: String!
+  boardId: String!
   desc: String
   title: String!
-  creator: User!
+  creatorId: String!
   commentsCount: Float!
+  board: Board!
+  list: List!
+  creator: User!
 }
 
 type CheckList {
@@ -75,6 +83,8 @@ type Mutation {
   createList(createListDto: CreateListDto!): List!
   createCard(createListDto: CreateCardDto!): Card!
   createBoard(createBoardDto: CreateBoardDto!): Board!
+  closeBoard(id: String!): Board!
+  openBoard(id: String!): Board!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
 }
@@ -82,15 +92,15 @@ type Mutation {
 input CreateListDto {
   title: String!
   slot: Float!
-  board: String!
-  creator: String!
+  boardId: String!
+  creatorId: String!
 }
 
 input CreateCardDto {
-  list: String!
-  board: String!
+  listId: String!
+  boardId: String!
   title: String!
-  creator: String!
+  creatorId: String!
 }
 
 input CreateBoardDto {
@@ -98,7 +108,7 @@ input CreateBoardDto {
   private: Boolean!
 
   """Current user id"""
-  owner: String!
+  ownerId: String!
 }
 
 input CreateUserDto {

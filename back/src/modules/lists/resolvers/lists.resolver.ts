@@ -26,7 +26,7 @@ export class ListsResolver {
   }
   @ResolveField('board', () => Board)
   async getBoard(@Parent() list: List) {
-    return this.boardsService.findById(list.board);
+    return this.boardsService.findById(list.boardId);
   }
   @ResolveField('cards', () => Card)
   async getCards(@Parent() list: List) {
@@ -34,6 +34,6 @@ export class ListsResolver {
   }
   @ResolveField('creator', () => User)
   async getCreator(@Parent() list: List) {
-    return this.usersService.findById(list.creator);
+    return this.usersService.findById(list.creatorId);
   }
 }

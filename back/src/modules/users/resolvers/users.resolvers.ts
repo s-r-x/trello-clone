@@ -21,7 +21,7 @@ export class UsersResolvers {
     return this.usersService.findById(user);
   }
   @Query(() => User, { name: 'user' })
-  async getUser(@Args('id') id: string): Promise<User> {
+  async getUser(@Args('id') id: string) {
     return this.usersService.findById(id);
   }
 
@@ -31,7 +31,7 @@ export class UsersResolvers {
   }
 
   @ResolveField('boards', () => [Board])
-  async getBoards(@Parent() user: User): Promise<Board[]> {
+  async getBoards(@Parent() user: User) {
     return this.boardsService.findByMembers([user._id]);
   }
 }

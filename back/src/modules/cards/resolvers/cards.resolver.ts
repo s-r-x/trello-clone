@@ -26,14 +26,14 @@ export class CardsResolver {
   }
   @ResolveField('board', () => Board)
   async getBoard(@Parent() card: Card) {
-    return this.boardsService.findById(card.board);
+    return this.boardsService.findById(card.boardId);
   }
   @ResolveField('list', () => List)
   async getList(@Parent() card: Card) {
-    return this.listsService.findById(card.list);
+    return this.listsService.findById(card.listId);
   }
   @ResolveField('creator', () => User)
   async getCreator(@Parent() card: Card) {
-    return this.usersService.findById(card.creator);
+    return this.usersService.findById(card.creatorId);
   }
 }

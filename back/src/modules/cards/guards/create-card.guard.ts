@@ -20,12 +20,12 @@ export class CreateCardGuard implements CanActivate {
   async canActivate(ctx: ExecutionContext) {
     const user = currentUserSelector(ctx);
     const data: CreateCardDto = gqlArgsSelector(ctx)[createListDtoName];
-    if (data.creator !== user) {
+    if (data.creatorId !== user) {
       return false;
     }
     const [writeAllowed, listExists] = await Promise.all([
-      this.boardsService.isUserAllowedToWrite(user, data.board),
-      this.listsService.isExists({ _id: data.list, board: data.board }),
+      this.boardsService.isUserAllowedToWrite(user, data.boardId),
+      this.listsService.isExists({ _id: data.listId, board: data.boardId }),
     ]);
     return writeAllowed && listExists;
   }

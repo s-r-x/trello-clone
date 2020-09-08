@@ -16,7 +16,7 @@ export class CardDocument extends Document {
     required: true,
     type: Schema.Types.ObjectId,
   })
-  list: ObjectId;
+  listId: ObjectId;
 
   @Prop({
     ref: 'Board',
@@ -24,7 +24,7 @@ export class CardDocument extends Document {
     required: true,
     type: Schema.Types.ObjectId,
   })
-  board: ObjectId;
+  boardId: ObjectId;
 
   @Prop()
   desc: string;
@@ -39,7 +39,7 @@ export class CardDocument extends Document {
     required: true,
     type: Schema.Types.ObjectId,
   })
-  creator: ObjectId;
+  creatorId: ObjectId;
 
   @Prop({ default: 0 })
   commentsCount: number;

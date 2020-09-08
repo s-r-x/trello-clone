@@ -13,10 +13,10 @@ export class CreateListDto {
 
   @IsMongoId()
   @Field()
-  board: string;
+  boardId: string;
 
   @IsMongoId()
   @Field()
-  creator: string;
+  creatorId: string;
 }
 export const createListDtoName = 'createListDto';

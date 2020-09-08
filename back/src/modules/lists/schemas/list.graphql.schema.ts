@@ -1,6 +1,4 @@
 import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
-import { Board } from '@/modules/boards/schemas/board.graphql.schema';
-import { User } from '@/modules/users/schemas/user.graphql.schema';
 import { ObjectId } from '@/typings';
 
 @ObjectType()
@@ -8,11 +6,11 @@ export class List {
   @Field(() => ID)
   _id: ObjectId;
 
-  @Field(() => Board)
-  board: ObjectId;
+  @Field(() => String)
+  boardId: ObjectId;
 
-  @Field(() => User)
-  creator: ObjectId;
+  @Field(() => String)
+  creatorId: ObjectId;
 
   @Field(() => Int)
   slot: number;

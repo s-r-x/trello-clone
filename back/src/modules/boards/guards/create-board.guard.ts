@@ -8,6 +8,6 @@ export class CreateBoardGuard implements CanActivate {
   canActivate(ctx: ExecutionContext) {
     const user = currentUserSelector(ctx);
     const data: CreateBoardDto = gqlArgsSelector(ctx)[createBoardDtoName];
-    return user === data.owner;
+    return user === data.ownerId;
   }
 }

@@ -14,16 +14,16 @@ export class BoardsResolvers {
     private listsService: ListsService,
   ) {}
   @Query(() => Board, { name: 'board' })
-  async getBoard(@Args('id') id: string): Promise<Board> {
+  async getBoard(@Args('id') id: string) {
     return this.boardsService.findById(id);
   }
   @Query(() => [Board], { name: 'boards' })
-  async getBoards(): Promise<Board[]> {
+  async getBoards() {
     return this.boardsService.findMany();
   }
   @ResolveField('owner', () => User)
   async getOwner(@Parent() board: Board) {
-    return this.usersService.findById(board.owner);
+    return this.usersService.findById(board.ownerId);
   }
   @ResolveField('lists', () => [List])
   async getLists(@Parent() board: Board) {
@@ -31,6 +31,6 @@ export class BoardsResolvers {
   }
   @ResolveField('members', () => [User])
   async getMembers(@Parent() board: Board) {
-    return this.usersService.findByIds(board.members);
+    return this.usersService.findByIds(board.membersIds);
   }
 }

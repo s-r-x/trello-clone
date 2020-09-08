@@ -16,6 +16,6 @@ export class CreateBoardDto {
   @Field(() => String, {
     description: 'Current user id',
   })
-  owner: ObjectId;
+  ownerId: ObjectId;
 }
 export const createBoardDtoName = 'createBoardDto';

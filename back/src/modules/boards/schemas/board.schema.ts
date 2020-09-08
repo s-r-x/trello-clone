@@ -27,13 +27,18 @@ export class BoardDocument extends Document {
     ref: 'User',
     type: Schema.Types.ObjectId,
   })
-  owner: ObjectId;
+  ownerId: ObjectId;
   @Prop({
     index: true,
     ref: 'User',
     type: [Schema.Types.ObjectId],
   })
-  members: ObjectId[];
+  membersIds: ObjectId[];
+
+  @Prop({
+    default: false,
+  })
+  closed: boolean;
 }
 
 export const BoardSchema = SchemaFactory.createForClass(BoardDocument);
