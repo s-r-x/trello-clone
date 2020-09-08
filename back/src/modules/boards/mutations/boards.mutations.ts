@@ -5,6 +5,8 @@ import { CreateBoardDto, createBoardDtoName } from '../dto/create-board.dto';
 import { UseGuards, Injectable } from '@nestjs/common';
 import { CreateBoardGuard } from '../guards/create-board.guard';
 import { AuthOnlyGuard } from '@/modules/auth/guards/auth-only.guard';
+import { OpenBoardGuard } from '../guards/open-board.guard';
+import { CloseBoardGuard } from '../guards/close-board.guard';
 
 @Injectable()
 export class BoardsMutations {
@@ -16,11 +18,13 @@ export class BoardsMutations {
     return this.boardsService.create(createBoardDto);
   }
 
+  @UseGuards(AuthOnlyGuard, CloseBoardGuard)
   @Mutation(() => Board, { name: 'closeBoard' })
   async closeBoard(@Args('id') id: string) {
     return this.boardsService.closeBoard(id);
   }
 
+  @UseGuards(AuthOnlyGuard, OpenBoardGuard)
   @Mutation(() => Board, { name: 'openBoard' })
   async openBoard(@Args('id') id: string) {
     return this.boardsService.openBoard(id);

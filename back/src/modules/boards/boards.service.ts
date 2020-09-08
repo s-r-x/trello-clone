@@ -20,6 +20,19 @@ export class BoardsService extends AbstractCRUDService<BoardDocument> {
       },
     });
   }
+
+  public isUserAllowedToCloseBoard(user: ObjectId, board: ObjectId) {
+    return this.isUserABoardAdmin(user, board);
+  }
+  public isUserAllowedToOpenBoard(user: ObjectId, board: ObjectId) {
+    return this.isUserABoardAdmin(user, board);
+  }
+  private isUserABoardAdmin(user: ObjectId, board: ObjectId) {
+    return this.isExists({
+      _id: board,
+      ownerId: user,
+    });
+  }
   public isUserAllowedToRead(user: ObjectId, board: ObjectId) {
     if (user) {
       return this.isExists({
