@@ -13,6 +13,12 @@ export class ListsService extends AbstractCRUDService<ListDocument> {
   ) {
     super();
   }
+  public async getBoardId(listId: ObjectId) {
+    const list = await this.findById(listId, {
+      select: 'boardId',
+    });
+    return list?.boardId;
+  }
   public async create(data: CreateListDto) {
     return super.create(data);
   }

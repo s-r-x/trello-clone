@@ -81,6 +81,7 @@ type Query {
 
 type Mutation {
   createList(createListDto: CreateListDto!): List!
+  removeList(id: String!): Float!
   createCard(createListDto: CreateCardDto!): Card!
   createBoard(createBoardDto: CreateBoardDto!): Board!
   closeBoard(id: String!): Board!

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { BoardsPolicies } from '../boards/boards.policies';
 import { CreateListDto } from './dto/create-list.dto';
+import { ObjectId } from '@/typings';
 
 @Injectable()
 export class ListsPolicies {
@@ -14,5 +15,12 @@ export class ListsPolicies {
       data.creatorId,
       data.boardId,
     );
+  }
+  public async isUserAllowedToRemoveList(listId: ObjectId, userId: ObjectId) {
+    const boardId = await this.listsService.getBoardId(listId);
+    if (!boardId) {
+      return false;
+    }
+    return this.boardsPolicies.isUserAllowedToWrite(userId, boardId);
   }
 }
