@@ -4,6 +4,7 @@ import { CheckListDocument } from './schemas/check-list.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateCheckListDto } from './dto/create-check-list.dto';
+import { ObjectId } from '@/typings';
 
 @Injectable()
 export class CheckListsService extends AbstractCRUDService<CheckListDocument> {
@@ -13,7 +14,12 @@ export class CheckListsService extends AbstractCRUDService<CheckListDocument> {
   ) {
     super();
   }
-  create(data: CreateCheckListDto) {
+  async create(data: CreateCheckListDto) {
     return super.create(data);
+  }
+  async removeCheckList(id: ObjectId) {
+    // TODO
+    await super.deleteById(id);
+    return 1;
   }
 }

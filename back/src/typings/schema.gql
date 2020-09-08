@@ -94,6 +94,7 @@ type Mutation {
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
   createCheckList(createCheckListDto: CreateCheckListDto!): CheckList!
+  removeCheckList(id: String!): Float!
 }
 
 input CreateListDto {

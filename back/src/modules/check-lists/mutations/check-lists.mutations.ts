@@ -11,9 +11,16 @@ import { CheckListsService } from '../check-lists.service';
 @Injectable()
 export class CheckListsMutations {
   constructor(private checkListsService: CheckListsService) {}
+
   @UseGuards(AuthOnlyGuard)
   @Mutation(() => CheckList, { name: 'createCheckList' })
   async createCheckList(@Args(createCheckListDtoName) dto: CreateCheckListDto) {
     return this.checkListsService.create(dto);
+  }
+
+  @UseGuards(AuthOnlyGuard)
+  @Mutation(() => Number, { name: 'removeCheckList' })
+  async removeCheckList(@Args('id') checkListId: string) {
+    return this.checkListsService.removeCheckList(checkListId);
   }
 }
