@@ -83,6 +83,7 @@ type Mutation {
   createList(createListDto: CreateListDto!): List!
   removeList(id: String!): Float!
   createCard(createListDto: CreateCardDto!): Card!
+  removeCard(id: String!): Float!
   createBoard(createBoardDto: CreateBoardDto!): Board!
   closeBoard(id: String!): Board!
   openBoard(id: String!): Board!
