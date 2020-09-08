@@ -92,8 +92,7 @@ export abstract class AbstractCRUDService<T extends Document> {
     return this.model.exists(condition);
   }
   public async create(data: any) {
-    const entity = await this.model.create(data);
-    return entity;
+    return this.model.create(data);
   }
   public async deleteById(id: ObjectId): Promise<any> {
     return this.model.deleteOne({ _id: id });

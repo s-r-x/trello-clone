@@ -6,6 +6,7 @@ import {
   CheckListSchema,
 } from './schemas/check-list.schema';
 import { CheckListsResolvers } from './resolvers/check-list.resolvers';
+import { CheckListsMutations } from './mutations/check-lists.mutations';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { CheckListsResolvers } from './resolvers/check-list.resolvers';
       },
     ]),
   ],
-  providers: [CheckListsService, CheckListsResolvers],
+  providers: [CheckListsService, CheckListsResolvers, CheckListsMutations],
 })
 export class CheckListsModule {}

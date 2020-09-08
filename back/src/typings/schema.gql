@@ -93,6 +93,7 @@ type Mutation {
   updateBoard(updateBoardDto: UpdateBoardDto!, id: String!): Board!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
+  createCheckList(createCheckListDto: CreateCheckListDto!): CheckList!
 }
 
 input CreateListDto {
@@ -143,4 +144,10 @@ input CreateUserDto {
 input LoginDto {
   login: String!
   password: String!
+}
+
+input CreateCheckListDto {
+  title: String!
+  boardId: String!
+  cardId: String!
 }
