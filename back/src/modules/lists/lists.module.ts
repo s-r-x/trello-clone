@@ -7,6 +7,7 @@ import { ListsResolver } from './resolvers/lists.resolver';
 import { ListsMutations } from './mutations/lists.mutations';
 import { CardsModule } from '../cards/cards.module';
 import { UsersModule } from '../users/users.module';
+import { ListsPolicies } from './lists.policies';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { UsersModule } from '../users/users.module';
       },
     ]),
   ],
-  providers: [ListsService, ListsResolver, ListsMutations],
+  providers: [ListsService, ListsResolver, ListsMutations, ListsPolicies],
   exports: [ListsService],
 })
 export class ListsModule {}
