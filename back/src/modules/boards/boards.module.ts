@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { BoardsResolvers } from './resolvers/boards.resolvers';
 import { ListsModule } from '../lists/lists.module';
 import { BoardsMutations } from './mutations/boards.mutations';
+import { BoardsPolicies } from './boards.policies';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { BoardsMutations } from './mutations/boards.mutations';
     forwardRef(() => UsersModule),
     forwardRef(() => ListsModule),
   ],
-  providers: [BoardsService, BoardsResolvers, BoardsMutations],
-  exports: [BoardsService],
+  providers: [BoardsService, BoardsResolvers, BoardsMutations, BoardsPolicies],
+  exports: [BoardsService, BoardsPolicies],
 })
 export class BoardsModule {}

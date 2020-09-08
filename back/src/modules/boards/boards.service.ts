@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ObjectId } from '@/typings';
 import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
+import { AddBoardMemberDto } from './dto/add-member.dto';
 
 @Injectable()
 export class BoardsService extends AbstractCRUDService<BoardDocument> {
@@ -17,51 +18,6 @@ export class BoardsService extends AbstractCRUDService<BoardDocument> {
     return this.findMany({
       membersIds: {
         $in: members,
-      },
-    });
-  }
-
-  public isUserAllowedToCloseBoard(user: ObjectId, board: ObjectId) {
-    return this.isUserABoardAdmin(user, board);
-  }
-  public isUserAllowedToOpenBoard(user: ObjectId, board: ObjectId) {
-    return this.isUserABoardAdmin(user, board);
-  }
-  private isUserABoardAdmin(user: ObjectId, board: ObjectId) {
-    return this.isExists({
-      _id: board,
-      ownerId: user,
-    });
-  }
-  public isUserAllowedToRead(user: ObjectId, board: ObjectId) {
-    if (user) {
-      return this.isExists({
-        _id: board,
-        closed: false,
-        $or: [
-          {
-            private: false,
-          },
-          {
-            membersIds: {
-              $in: [user],
-            },
-          },
-        ],
-      });
-    } else {
-      return this.isExists({
-        _id: board,
-        private: false,
-      });
-    }
-  }
-  public isUserAllowedToWrite(user: ObjectId, board: ObjectId) {
-    return this.isExists({
-      _id: board,
-      closed: false,
-      membersIds: {
-        $in: [user],
       },
     });
   }
@@ -89,6 +45,21 @@ export class BoardsService extends AbstractCRUDService<BoardDocument> {
       boardId,
       {
         closed: true,
+      },
+      {
+        new: true,
+        lean: true,
+      },
+    );
+    return board;
+  }
+  public async addMember(data: AddBoardMemberDto) {
+    const board = await this.model.findByIdAndUpdate(
+      data.boardId,
+      {
+        $addToSet: {
+          membersIds: data.userId,
+        },
       },
       {
         new: true,

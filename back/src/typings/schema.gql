@@ -85,6 +85,7 @@ type Mutation {
   createBoard(createBoardDto: CreateBoardDto!): Board!
   closeBoard(id: String!): Board!
   openBoard(id: String!): Board!
+  addBoardMember(addBoardMemberDto: AddBoardMemberDto!): Board!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
 }
@@ -109,6 +110,11 @@ input CreateBoardDto {
 
   """Current user id"""
   ownerId: String!
+}
+
+input AddBoardMemberDto {
+  boardId: String!
+  userId: String!
 }
 
 input CreateUserDto {

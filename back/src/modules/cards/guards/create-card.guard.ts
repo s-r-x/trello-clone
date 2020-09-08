@@ -4,17 +4,17 @@ import {
   ExecutionContext,
   Injectable,
 } from '@nestjs/common';
-import { BoardsService } from '@/modules/boards/boards.service';
 import { CreateCardDto } from '../dto/create-card.dto';
 import { ListsService } from '@/modules/lists/lists.service';
 import { currentUserSelector } from '@/common/selectors/current-user.selector';
 import { gqlArgsSelector } from '@/common/selectors/args.gql.selector';
 import { createListDtoName } from '@/modules/lists/dto/create-list.dto';
+import { BoardsPolicies } from '@/modules/boards/boards.policies';
 
 @Injectable()
 export class CreateCardGuard implements CanActivate {
   constructor(
-    @Inject(BoardsService) private boardsService: BoardsService,
+    @Inject(BoardsPolicies) private boardPolicies: BoardsPolicies,
     @Inject(ListsService) private listsService: ListsService,
   ) {}
   async canActivate(ctx: ExecutionContext) {
@@ -24,7 +24,7 @@ export class CreateCardGuard implements CanActivate {
       return false;
     }
     const [writeAllowed, listExists] = await Promise.all([
-      this.boardsService.isUserAllowedToWrite(user, data.boardId),
+      this.boardPolicies.isUserAllowedToWrite(user, data.boardId),
       this.listsService.isExists({ _id: data.listId, board: data.boardId }),
     ]);
     return writeAllowed && listExists;
