@@ -9,6 +9,9 @@ export class BoardsPolicies {
   public isUserAllowedToAddMember(user: ObjectId, board: ObjectId) {
     return this.isUserABoardAdmin(user, board);
   }
+  public isUserAllowedToRemoveMember(user: ObjectId, board: ObjectId) {
+    return this.isUserABoardAdmin(user, board);
+  }
   public isUserAllowedToCloseBoard(user: ObjectId, board: ObjectId) {
     return this.isUserABoardAdmin(user, board);
   }

@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { ObjectId } from '@/typings';
 import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
 import { AddBoardMemberDto } from './dto/add-member.dto';
+import { RemoveBoardMemberDto } from './dto/remove-member.dto';
 
 @Injectable()
 export class BoardsService extends AbstractCRUDService<BoardDocument> {
@@ -58,6 +59,21 @@ export class BoardsService extends AbstractCRUDService<BoardDocument> {
       data.boardId,
       {
         $addToSet: {
+          membersIds: data.userId,
+        },
+      },
+      {
+        new: true,
+        lean: true,
+      },
+    );
+    return board;
+  }
+  public async removeMember(data: RemoveBoardMemberDto) {
+    const board = await this.model.findByIdAndUpdate(
+      data.boardId,
+      {
+        $pull: {
           membersIds: data.userId,
         },
       },

@@ -12,6 +12,8 @@ import {
   AddBoardMemberDto,
 } from '../dto/add-member.dto';
 import { AddBoardMemberGuard } from '../guards/add-member.guard';
+import { RemoveBoardMemberGuard } from '../guards/remove-member.guard';
+import { removeBoardMemberDtoName, RemoveBoardMemberDto } from '../dto/remove-member.dto';
 
 @Injectable()
 export class BoardsMutations {
@@ -39,5 +41,11 @@ export class BoardsMutations {
   @Mutation(() => Board, { name: 'addBoardMember' })
   async addMember(@Args(addBoardMemberDtoName) dto: AddBoardMemberDto) {
     return this.boardsService.addMember(dto);
+  }
+
+  @UseGuards(AuthOnlyGuard, RemoveBoardMemberGuard)
+  @Mutation(() => Board, { name: 'removeBoardMember'})
+  async removeMember(@Args(removeBoardMemberDtoName) dto: RemoveBoardMemberDto) {
+    return this.boardsService.removeMember(dto);
   }
 }
