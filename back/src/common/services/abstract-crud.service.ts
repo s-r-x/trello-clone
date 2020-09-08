@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Model, Document, QueryFindOptions } from 'mongoose';
+import {
+  Model,
+  Document,
+  QueryFindOptions,
+  QueryFindOneAndUpdateOptions,
+} from 'mongoose';
 import { ObjectId } from '@/typings';
 import { merge } from 'lodash';
 
@@ -9,13 +14,30 @@ interface IOptions {
   limit?: number;
   skip?: number;
 }
+interface IFindAndUpdateOptions extends Pick<IOptions, 'fullDoc' | 'select'> {
+  oldDoc?: boolean;
+}
 const defaultOpts: IOptions = {
   fullDoc: false,
+};
+const defaultFindAndUpdateOpts: IFindAndUpdateOptions = {
+  fullDoc: false,
+  oldDoc: false,
 };
 @Injectable()
 export abstract class AbstractCRUDService<T extends Document> {
   protected model: Model<T>;
 
+  private constructFindAndUpdateOptions(
+    userOpts: IFindAndUpdateOptions,
+  ): QueryFindOneAndUpdateOptions {
+    const opts = merge(userOpts, defaultFindAndUpdateOpts);
+    return {
+      lean: !opts.fullDoc,
+      select: opts.select,
+      new: !opts.oldDoc,
+    };
+  }
   private constructOptions(userOpts: IOptions): QueryFindOptions {
     const opts = merge(userOpts, defaultOpts);
     return {
@@ -31,6 +53,28 @@ export abstract class AbstractCRUDService<T extends Document> {
   }
   public async findById(id: any, opts?: IOptions) {
     return this.model.findById(id, '', this.constructOptions(opts));
+  }
+  public async findByIdAndUpdate(
+    id: any,
+    updates: any,
+    opts?: IFindAndUpdateOptions,
+  ) {
+    return this.model.findById(
+      id,
+      updates,
+      this.constructFindAndUpdateOptions(opts),
+    );
+  }
+  public async findOneAndUpdate(
+    id: any,
+    updates: any,
+    opts?: IFindAndUpdateOptions,
+  ) {
+    return this.model.findOne(
+      id,
+      updates,
+      this.constructFindAndUpdateOptions(opts),
+    );
   }
   public async findByIds(ids: any[], opts?: IOptions) {
     return this.model.find(

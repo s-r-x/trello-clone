@@ -18,6 +18,7 @@ import {
   RemoveBoardMemberDto,
 } from '../dto/remove-member.dto';
 import { RemoveBoardGuard } from '../guards/remove-board.guard';
+import { updateBoardDtoName, UpdateBoardDto } from '../dto/update-board.dto';
 
 @Injectable()
 export class BoardsMutations {
@@ -59,5 +60,14 @@ export class BoardsMutations {
   @Mutation(() => Number, { name: 'removeBoard' })
   async removeBoard(@Args('id') id: string) {
     return this.boardsService.removeBoard(id);
+  }
+
+  @UseGuards(AuthOnlyGuard)
+  @Mutation(() => Board, { name: 'updateBoard' })
+  async updateBoard(
+    @Args('id') boardId: string,
+    @Args(updateBoardDtoName) dto: UpdateBoardDto,
+  ) {
+    return this.boardsService.updateBoard(boardId, dto);
   }
 }

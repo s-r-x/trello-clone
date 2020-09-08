@@ -90,6 +90,7 @@ type Mutation {
   addBoardMember(addBoardMemberDto: AddBoardMemberDto!): Board!
   removeBoardMember(removeBoardMemberDto: RemoveBoardMemberDto!): Board!
   removeBoard(id: String!): Float!
+  updateBoard(updateBoardDto: UpdateBoardDto!, id: String!): Board!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
 }
@@ -124,6 +125,13 @@ input AddBoardMemberDto {
 input RemoveBoardMemberDto {
   boardId: String!
   userId: String!
+}
+
+input UpdateBoardDto {
+  """Current user id"""
+  ownerId: String!
+  title: String!
+  private: Boolean!
 }
 
 input CreateUserDto {

@@ -7,6 +7,7 @@ import { ObjectId } from '@/typings';
 import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
 import { AddBoardMemberDto } from './dto/add-member.dto';
 import { RemoveBoardMemberDto } from './dto/remove-member.dto';
+import { UpdateBoardDto } from './dto/update-board.dto';
 
 @Injectable()
 export class BoardsService extends AbstractCRUDService<BoardDocument> {
@@ -29,60 +30,35 @@ export class BoardsService extends AbstractCRUDService<BoardDocument> {
     return board;
   }
   public async openBoard(boardId: ObjectId) {
-    const board = await this.model.findByIdAndUpdate(
-      boardId,
-      {
-        closed: false,
-      },
-      {
-        new: true,
-        lean: true,
-      },
-    );
+    const board = await this.findByIdAndUpdate(boardId, {
+      closed: false,
+    });
     return board;
   }
   public async closeBoard(boardId: ObjectId) {
-    const board = await this.model.findByIdAndUpdate(
-      boardId,
-      {
-        closed: true,
-      },
-      {
-        new: true,
-        lean: true,
-      },
-    );
+    const board = await this.findByIdAndUpdate(boardId, {
+      closed: true,
+    });
     return board;
   }
   public async addMember(data: AddBoardMemberDto) {
-    const board = await this.model.findByIdAndUpdate(
-      data.boardId,
-      {
-        $addToSet: {
-          membersIds: data.userId,
-        },
+    const board = await this.findByIdAndUpdate(data.boardId, {
+      $addToSet: {
+        membersIds: data.userId,
       },
-      {
-        new: true,
-        lean: true,
-      },
-    );
+    });
     return board;
   }
   public async removeMember(data: RemoveBoardMemberDto) {
-    const board = await this.model.findByIdAndUpdate(
-      data.boardId,
-      {
-        $pull: {
-          membersIds: data.userId,
-        },
+    const board = await this.findByIdAndUpdate(data.boardId, {
+      $pull: {
+        membersIds: data.userId,
       },
-      {
-        new: true,
-        lean: true,
-      },
-    );
+    });
     return board;
+  }
+  public async updateBoard(boardId: ObjectId, data: UpdateBoardDto) {
+    return super.findByIdAndUpdate(boardId, data);
   }
   public async removeBoard(boardId: ObjectId) {
     // TODO
