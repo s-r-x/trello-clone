@@ -87,6 +87,7 @@ type Mutation {
   openBoard(id: String!): Board!
   addBoardMember(addBoardMemberDto: AddBoardMemberDto!): Board!
   removeBoardMember(removeBoardMemberDto: RemoveBoardMemberDto!): Board!
+  removeBoard(id: String!): Float!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
 }

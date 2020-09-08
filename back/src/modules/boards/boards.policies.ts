@@ -6,6 +6,13 @@ import { ObjectId } from '@/typings';
 export class BoardsPolicies {
   constructor(private boardsService: BoardsService) {}
 
+  public isUserAllowedToRemoveBoard(user: ObjectId, board: ObjectId) {
+    return this.boardsService.isExists({
+      _id: board,
+      ownerId: user,
+      closed: true,
+    });
+  }
   public isUserAllowedToAddMember(user: ObjectId, board: ObjectId) {
     return this.isUserABoardAdmin(user, board);
   }

@@ -84,4 +84,9 @@ export class BoardsService extends AbstractCRUDService<BoardDocument> {
     );
     return board;
   }
+  public async removeBoard(boardId: ObjectId) {
+    // TODO
+    await super.deleteById(boardId);
+    return 1;
+  }
 }

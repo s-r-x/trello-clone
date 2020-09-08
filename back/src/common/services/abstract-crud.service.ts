@@ -51,7 +51,7 @@ export abstract class AbstractCRUDService<T extends Document> {
     const entity = await this.model.create(data);
     return entity;
   }
-  public async deleteById(id: ObjectId) {
+  public async deleteById(id: ObjectId): Promise<any> {
     return this.model.deleteOne({ _id: id });
   }
 }

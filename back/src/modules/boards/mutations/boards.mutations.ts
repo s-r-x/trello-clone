@@ -13,7 +13,11 @@ import {
 } from '../dto/add-member.dto';
 import { AddBoardMemberGuard } from '../guards/add-member.guard';
 import { RemoveBoardMemberGuard } from '../guards/remove-member.guard';
-import { removeBoardMemberDtoName, RemoveBoardMemberDto } from '../dto/remove-member.dto';
+import {
+  removeBoardMemberDtoName,
+  RemoveBoardMemberDto,
+} from '../dto/remove-member.dto';
+import { RemoveBoardGuard } from '../guards/remove-board.guard';
 
 @Injectable()
 export class BoardsMutations {
@@ -44,8 +48,16 @@ export class BoardsMutations {
   }
 
   @UseGuards(AuthOnlyGuard, RemoveBoardMemberGuard)
-  @Mutation(() => Board, { name: 'removeBoardMember'})
-  async removeMember(@Args(removeBoardMemberDtoName) dto: RemoveBoardMemberDto) {
+  @Mutation(() => Board, { name: 'removeBoardMember' })
+  async removeMember(
+    @Args(removeBoardMemberDtoName) dto: RemoveBoardMemberDto,
+  ) {
     return this.boardsService.removeMember(dto);
+  }
+
+  @UseGuards(AuthOnlyGuard, RemoveBoardGuard)
+  @Mutation(() => Number, { name: 'removeBoard' })
+  async removeBoard(@Args('id') id: string) {
+    return this.boardsService.removeBoard(id);
   }
 }
