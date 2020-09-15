@@ -18,12 +18,25 @@ export class CheckItemsService extends AbstractCRUDService<CheckItemDocument> {
   }
   async create(data: CreateCheckItemDto) {
     const checkItem = await super.create(data);
-    await this.cardsService.incCheckItemsCount(checkItem.cardId);
+    await this.cardsService.updateById(checkItem.cardId, {
+      $inc: {
+        'badges.checkItems': 1,
+      },
+    });
     return checkItem;
   }
   async removeCheckItem(id: ObjectId) {
-    // TODO
-    await super.deleteById(id);
+    const checkItem = await super.findByIdAndDelete(id);
+    if (checkItem) {
+      await this.cardsService.updateById(checkItem.cardId, {
+        $inc: {
+          badges: {
+            checkItems: -1,
+            ...(checkItem.checked && { checked: -1 }),
+          },
+        },
+      });
+    }
     return 1;
   }
 }

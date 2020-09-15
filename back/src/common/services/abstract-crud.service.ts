@@ -4,6 +4,7 @@ import {
   Document,
   QueryFindOptions,
   QueryFindOneAndUpdateOptions,
+  QueryFindOneAndRemoveOptions,
 } from 'mongoose';
 import { ObjectId } from '@/typings';
 import { merge } from 'lodash';
@@ -17,6 +18,7 @@ interface IOptions {
 interface IFindAndUpdateOptions extends Pick<IOptions, 'fullDoc' | 'select'> {
   oldDoc?: boolean;
 }
+interface IFindAndDeleteOptions extends Pick<IOptions, 'select'> {}
 const defaultOpts: IOptions = {
   fullDoc: false,
 };
@@ -24,10 +26,19 @@ const defaultFindAndUpdateOpts: IFindAndUpdateOptions = {
   fullDoc: false,
   oldDoc: false,
 };
+const defaultFindAndDeleteOptions = {};
 @Injectable()
 export abstract class AbstractCRUDService<T extends Document> {
   protected model: Model<T>;
 
+  private constructFindAndDeleteOptions(
+    userOpts: IFindAndDeleteOptions,
+  ): QueryFindOneAndRemoveOptions {
+    const opts = merge(userOpts, defaultFindAndDeleteOptions);
+    return {
+      select: opts.select,
+    };
+  }
   private constructFindAndUpdateOptions(
     userOpts: IFindAndUpdateOptions,
   ): QueryFindOneAndUpdateOptions {
@@ -62,19 +73,21 @@ export abstract class AbstractCRUDService<T extends Document> {
     updates: any,
     opts?: IFindAndUpdateOptions,
   ) {
-    return this.model.findById(
-      id,
-      updates,
-      this.constructFindAndUpdateOptions(opts),
-    );
+    return this.findOneAndUpdate({ _id: id }, updates, opts);
+  }
+  public async findOneAndDelete(query: any, opts?: IFindAndDeleteOptions) {
+    return this.model.findOneAndDelete(query, opts);
+  }
+  public async findByIdAndDelete(id: any, opts?: IFindAndDeleteOptions) {
+    return this.model.findOneAndDelete({ _id: id }, opts);
   }
   public async findOneAndUpdate(
-    id: any,
+    query: any,
     updates: any,
     opts?: IFindAndUpdateOptions,
   ) {
-    return this.model.findOne(
-      id,
+    return this.model.findOneAndUpdate(
+      query,
       updates,
       this.constructFindAndUpdateOptions(opts),
     );
