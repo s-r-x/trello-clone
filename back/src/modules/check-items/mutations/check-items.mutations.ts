@@ -7,6 +7,10 @@ import {
   createCheckItemDtoName,
   CreateCheckItemDto,
 } from '../dto/create-check-item.dto';
+import {
+  UpdateCheckItemDto,
+  updateCheckItemDtoName,
+} from '../dto/update-check-item.dto';
 
 @Injectable()
 export class CheckItemsMutations {
@@ -16,6 +20,15 @@ export class CheckItemsMutations {
   @Mutation(() => CheckItem, { name: 'createCheckItem' })
   async createCheckItem(@Args(createCheckItemDtoName) dto: CreateCheckItemDto) {
     return this.checkItemsService.create(dto);
+  }
+
+  @UseGuards(AuthOnlyGuard)
+  @Mutation(() => CheckItem, { name: 'updateCheckItem' })
+  async updateCheckItem(
+    @Args(updateCheckItemDtoName) dto: UpdateCheckItemDto,
+    @Args('id') id: string,
+  ) {
+    return this.checkItemsService.updateCheckItem(id, dto);
   }
 
   @UseGuards(AuthOnlyGuard)

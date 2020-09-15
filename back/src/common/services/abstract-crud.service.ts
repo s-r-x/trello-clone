@@ -63,7 +63,7 @@ export abstract class AbstractCRUDService<T extends Document> {
     return this.model.findOne(query, '', this.constructOptions(opts));
   }
   public async findById(id: any, opts?: IOptions) {
-    return this.model.findById(id, '', this.constructOptions(opts));
+    return this.findOne({ _id: id }, opts);
   }
   public async updateById(id: any, updates: any) {
     await this.model.updateOne({ _id: id }, updates);
@@ -76,7 +76,10 @@ export abstract class AbstractCRUDService<T extends Document> {
     return this.findOneAndUpdate({ _id: id }, updates, opts);
   }
   public async findOneAndDelete(query: any, opts?: IFindAndDeleteOptions) {
-    return this.model.findOneAndDelete(query, opts);
+    return this.model.findOneAndDelete(
+      query,
+      this.constructFindAndDeleteOptions(opts),
+    );
   }
   public async findByIdAndDelete(id: any, opts?: IFindAndDeleteOptions) {
     return this.model.findOneAndDelete({ _id: id }, opts);
@@ -93,15 +96,14 @@ export abstract class AbstractCRUDService<T extends Document> {
     );
   }
   public async findByIds(ids: any[], opts?: IOptions) {
-    return this.model.find(
+    return this.findMany(
       // @ts-ignore
       {
         _id: {
           $in: ids,
         },
       },
-      '',
-      this.constructOptions(opts),
+      opts,
     );
   }
   public async isExists(condition: any) {
