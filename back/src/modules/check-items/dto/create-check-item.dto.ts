@@ -14,6 +14,10 @@ export class CreateCheckItemDto {
   @IsMongoId()
   @Field()
   checkListId: string;
+
+  @IsMongoId()
+  @Field()
+  cardId: string;
 }
 
 export const createCheckItemDtoName = 'createCheckItemDto';

@@ -5,17 +5,20 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateCheckItemDto } from './dto/create-check-item.dto';
 import { ObjectId } from '@/typings';
+import { CardsService } from '../cards/cards.service';
 
 @Injectable()
 export class CheckItemsService extends AbstractCRUDService<CheckItemDocument> {
   constructor(
     @InjectModel(CheckItemDocument.name)
     protected model: Model<CheckItemDocument>,
+    private cardsService: CardsService,
   ) {
     super();
   }
   async create(data: CreateCheckItemDto) {
-    return super.create(data);
+    const checkItem = await super.create(data);
+    return checkItem;
   }
   async removeCheckItem(id: ObjectId) {
     // TODO

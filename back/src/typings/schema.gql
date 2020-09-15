@@ -169,4 +169,5 @@ input CreateCheckItemDto {
   title: String!
   checked: Boolean!
   checkListId: String!
+  cardId: String!
 }
