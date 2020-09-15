@@ -5,6 +5,7 @@ import {
 } from '@nestjs/mongoose';
 import { Document, Schema } from 'mongoose';
 import { ObjectId } from '@/typings';
+import { CardBadgesDocument } from './card-badges/card-badges.schema';
 
 @SchemaDecorator({
   collection: 'cards',
@@ -43,6 +44,8 @@ export class CardDocument extends Document {
 
   @Prop({ default: 0 })
   commentsCount: number;
+  @Prop(CardBadgesDocument)
+  badges: CardBadgesDocument;
 }
 
 export const CardSchema = SchemaFactory.createForClass(CardDocument);

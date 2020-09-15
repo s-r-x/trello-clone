@@ -17,7 +17,7 @@ export class CardsResolver {
     private usersService: UsersService,
   ) {}
   @Query(() => Card, { name: 'card' })
-  async getCard(@Args('id') id: string): Promise<Card> {
+  async getCard(@Args('id') id: string) {
     return this.cardsService.findById(id);
   }
   @Query(() => [Card], { name: 'cards' })

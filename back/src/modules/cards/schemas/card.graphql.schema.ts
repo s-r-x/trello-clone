@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ObjectId } from '@/typings';
+import { CardBadges } from './card-badges/card-badges.gql.schema';
 
 @ObjectType()
 export class Card {
@@ -23,4 +24,7 @@ export class Card {
 
   @Field()
   commentsCount: number;
+
+  @Field(() => CardBadges)
+  badges: CardBadges;
 }

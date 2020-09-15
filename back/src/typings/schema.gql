@@ -36,6 +36,12 @@ type List {
   creator: User!
 }
 
+type CardBadges {
+  attachments: Int!
+  checked: Int!
+  checkedItems: Int!
+}
+
 type Card {
   _id: ID!
   listId: String!
@@ -44,6 +50,7 @@ type Card {
   title: String!
   creatorId: String!
   commentsCount: Float!
+  badges: CardBadges!
   board: Board!
   list: List!
   creator: User!
