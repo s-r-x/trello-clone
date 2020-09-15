@@ -9,5 +9,5 @@ export class CardBadges {
   checked: number;
 
   @Field(() => Int)
-  checkedItems: number;
+  checkItems: number;
 }

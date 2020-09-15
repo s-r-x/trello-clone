@@ -18,6 +18,7 @@ export class CheckItemsService extends AbstractCRUDService<CheckItemDocument> {
   }
   async create(data: CreateCheckItemDto) {
     const checkItem = await super.create(data);
+    await this.cardsService.incCheckItemsCount(checkItem.cardId);
     return checkItem;
   }
   async removeCheckItem(id: ObjectId) {

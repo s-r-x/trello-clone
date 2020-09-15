@@ -19,6 +19,20 @@ export class CardsService extends AbstractCRUDService<CardDocument> {
     });
     return card?.boardId;
   }
+  public async incCheckItemsCount(cardId: ObjectId) {
+    await this.updateById(cardId, {
+      $inc: {
+        'badges.checkItems': 1,
+      },
+    });
+  }
+  public async decCheckItemsCount(cardId: ObjectId) {
+    await this.updateById(cardId, {
+      $inc: {
+        'badges.checkItems': -1,
+      },
+    });
+  }
   public async create(data: CreateCardDto) {
     return super.create(data);
   }

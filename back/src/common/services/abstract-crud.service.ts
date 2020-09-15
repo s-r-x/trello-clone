@@ -54,6 +54,9 @@ export abstract class AbstractCRUDService<T extends Document> {
   public async findById(id: any, opts?: IOptions) {
     return this.model.findById(id, '', this.constructOptions(opts));
   }
+  public async updateById(id: any, updates: any) {
+    await this.model.updateOne({ _id: id }, updates);
+  }
   public async findByIdAndUpdate(
     id: any,
     updates: any,

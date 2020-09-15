@@ -15,5 +15,5 @@ export class CardBadgesDocument {
   @Prop({
     default: 0,
   })
-  checkedItems: number;
+  checkItems: number;
 }

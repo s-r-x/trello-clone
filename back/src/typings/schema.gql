@@ -39,7 +39,7 @@ type List {
 type CardBadges {
   attachments: Int!
   checked: Int!
-  checkedItems: Int!
+  checkItems: Int!
 }
 
 type Card {
