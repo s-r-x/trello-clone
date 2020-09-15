@@ -12,6 +12,9 @@ export class CheckItem {
   @Field(() => String)
   checkListId: ObjectId;
 
+  @Field(() => String)
+  cardId: ObjectId;
+
   @Field()
   checked: boolean;
 }

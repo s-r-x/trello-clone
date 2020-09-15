@@ -67,7 +67,10 @@ type CheckItem {
   _id: ID!
   title: String!
   checkListId: String!
+  cardId: String!
   checked: Boolean!
+  card: Card!
+  checkList: CheckList!
 }
 
 type Query {

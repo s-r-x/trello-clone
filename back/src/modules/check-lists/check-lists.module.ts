@@ -18,5 +18,6 @@ import { CheckListsMutations } from './mutations/check-lists.mutations';
     ]),
   ],
   providers: [CheckListsService, CheckListsResolvers, CheckListsMutations],
+  exports: [CheckListsService],
 })
 export class CheckListsModule {}

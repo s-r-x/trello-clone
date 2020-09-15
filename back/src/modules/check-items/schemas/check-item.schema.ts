@@ -22,6 +22,12 @@ export class CheckItemDocument extends Document {
   checkListId: ObjectId;
 
   @Prop({
+    type: Schema.Types.ObjectId,
+    required: true,
+  })
+  cardId: ObjectId;
+
+  @Prop({
     default: false,
   })
   checked: boolean;

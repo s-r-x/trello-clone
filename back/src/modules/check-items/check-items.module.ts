@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { CheckItemsService } from './check-items.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
@@ -7,6 +7,8 @@ import {
 } from './schemas/check-item.schema';
 import { CheckItemsResolvers } from './resolvers/check-items.resolvers';
 import { CheckItemsMutations } from './mutations/check-items.mutations';
+import { CardsModule } from '../cards/cards.module';
+import { CheckListsModule } from '../check-lists/check-lists.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { CheckItemsMutations } from './mutations/check-items.mutations';
         schema: CheckItemSchema,
       },
     ]),
+    forwardRef(() => CardsModule),
+    forwardRef(() => CheckListsModule)
   ],
   providers: [CheckItemsService, CheckItemsResolvers, CheckItemsMutations],
 })
