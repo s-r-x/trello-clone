@@ -7,6 +7,7 @@ import { BoardsResolvers } from './resolvers/boards.resolvers';
 import { ListsModule } from '../lists/lists.module';
 import { BoardsMutations } from './mutations/boards.mutations';
 import { BoardsPolicies } from './boards.policies';
+import { LabelsModule } from '../labels/labels.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BoardsPolicies } from './boards.policies';
     ]),
     forwardRef(() => UsersModule),
     forwardRef(() => ListsModule),
+    forwardRef(() => LabelsModule),
   ],
   providers: [BoardsService, BoardsResolvers, BoardsMutations, BoardsPolicies],
   exports: [BoardsService, BoardsPolicies],

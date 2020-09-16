@@ -13,5 +13,6 @@ import { LabelDocument, LabelSchema } from './schema/label.schema';
     ]),
   ],
   providers: [LabelsService],
+  exports: [LabelsService],
 })
 export class LabelsModule {}

@@ -8,11 +8,13 @@ import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
 import { AddBoardMemberDto } from './dto/add-member.dto';
 import { RemoveBoardMemberDto } from './dto/remove-member.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { LabelsService } from '../labels/labels.service';
 
 @Injectable()
 export class BoardsService extends AbstractCRUDService<BoardDocument> {
   constructor(
     @InjectModel(BoardDocument.name) protected model: Model<BoardDocument>,
+    private labelsService: LabelsService,
   ) {
     super();
   }
@@ -26,7 +28,10 @@ export class BoardsService extends AbstractCRUDService<BoardDocument> {
   public async create(data: CreateBoardDto) {
     const board = new this.model(data);
     board.membersIds = [data.ownerId];
-    await board.save();
+    await Promise.all([
+      this.labelsService.generateTemplateForBoard(board._id),
+      board.save(),
+    ]);
     return board;
   }
   public async openBoard(boardId: ObjectId) {
