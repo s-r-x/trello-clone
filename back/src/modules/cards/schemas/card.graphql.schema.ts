@@ -27,4 +27,7 @@ export class Card {
 
   @Field(() => CardBadges)
   badges: CardBadges;
+
+  @Field()
+  closed: boolean;
 }

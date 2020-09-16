@@ -44,8 +44,14 @@ export class CardDocument extends Document {
 
   @Prop({ default: 0 })
   commentsCount: number;
+
   @Prop(CardBadgesDocument)
   badges: CardBadgesDocument;
+
+  @Prop({
+    default: false,
+  })
+  closed: boolean;
 }
 
 export const CardSchema = SchemaFactory.createForClass(CardDocument);

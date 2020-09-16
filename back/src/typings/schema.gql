@@ -52,6 +52,7 @@ type Card {
   creatorId: String!
   commentsCount: Int!
   badges: CardBadges!
+  closed: Boolean!
   board: Board!
   list: List!
   creator: User!
