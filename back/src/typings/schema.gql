@@ -75,6 +75,13 @@ type CheckList {
   title: String!
 }
 
+type Label {
+  _id: ID!
+  boardId: String!
+  title: String
+  color: String!
+}
+
 type Query {
   me: User!
   user(id: String!): User!
@@ -89,6 +96,8 @@ type Query {
   checkItems: [CheckItem!]!
   checkList(id: String!): CheckList!
   checkLists: [CheckList!]!
+  label(id: String!): Label!
+  labels: [Label!]!
 }
 
 type Mutation {

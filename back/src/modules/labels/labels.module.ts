@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { LabelsService } from './labels.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LabelDocument, LabelSchema } from './schema/label.schema';
+import { LabelsResolvers } from './resolvers/labels.resolvers';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { LabelDocument, LabelSchema } from './schema/label.schema';
       },
     ]),
   ],
-  providers: [LabelsService],
+  providers: [LabelsService, LabelsResolvers],
   exports: [LabelsService],
 })
 export class LabelsModule {}
