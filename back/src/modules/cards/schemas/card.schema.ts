@@ -6,6 +6,7 @@ import {
 import { Document, Schema } from 'mongoose';
 import { ObjectId } from '@/typings';
 import { CardBadgesDocument } from './card-badges/card-badges.schema';
+import { LabelDocument } from '@/modules/labels/schema/label.schema';
 
 @SchemaDecorator({
   collection: 'cards',
@@ -47,6 +48,9 @@ export class CardDocument extends Document {
 
   @Prop(CardBadgesDocument)
   badges: CardBadgesDocument;
+
+  @Prop([LabelDocument])
+  labels: LabelDocument[];
 
   @Prop({
     default: false,

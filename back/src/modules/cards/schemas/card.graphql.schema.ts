@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 import { ObjectId } from '@/typings';
 import { CardBadges } from './card-badges/card-badges.gql.schema';
+import { Label } from '@/modules/labels/schema/label.gql.schema';
 
 @ObjectType()
 export class Card {
@@ -30,4 +31,7 @@ export class Card {
 
   @Field()
   closed: boolean;
+
+  @Field(() => [Label])
+  labels: Label[];
 }

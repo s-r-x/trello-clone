@@ -38,6 +38,6 @@ export class BoardsResolvers {
   }
   @ResolveField('labels', () => [Label])
   async getLabels(@Parent() board: Board) {
-    return this.labelsService.findMany({ board: board._id });
+    return this.labelsService.findMany({ boardId: board._id });
   }
 }

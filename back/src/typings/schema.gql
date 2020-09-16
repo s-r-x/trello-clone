@@ -61,6 +61,7 @@ type Card {
   commentsCount: Int!
   badges: CardBadges!
   closed: Boolean!
+  labels: [Label!]!
   board: Board!
   list: List!
   creator: User!
