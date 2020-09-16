@@ -7,6 +7,16 @@ import { Document, Schema } from 'mongoose';
 import { ObjectId } from '@/typings';
 
 @SchemaDecorator({
+  _id: false,
+})
+class BoardBackgroundDocument {
+  @Prop()
+  color?: string;
+  @Prop()
+  url?: string;
+}
+
+@SchemaDecorator({
   collection: 'boards',
 })
 export class BoardDocument extends Document {
@@ -20,8 +30,8 @@ export class BoardDocument extends Document {
   })
   title: string;
 
-  @Prop()
-  bg: string;
+  @Prop(BoardBackgroundDocument)
+  bg: BoardBackgroundDocument;
 
   @Prop({
     ref: 'User',

@@ -12,11 +12,16 @@ type User {
   boards: [Board!]!
 }
 
+type BoardBackground {
+  color: String
+  url: String
+}
+
 type Board {
   _id: ID!
   private: Boolean!
   title: String!
-  bg: String
+  bg: BoardBackground
   membersIds: [String!]!
   ownerId: String!
   closed: Boolean!
@@ -186,10 +191,11 @@ input RemoveBoardMemberDto {
 }
 
 input UpdateBoardDto {
+  title: String
+  private: Boolean
+
   """Current user id"""
-  ownerId: String!
-  title: String!
-  private: Boolean!
+  ownerId: String
 }
 
 input CreateUserDto {
