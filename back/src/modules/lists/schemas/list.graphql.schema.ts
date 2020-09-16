@@ -17,4 +17,7 @@ export class List {
 
   @Field()
   title: string;
+
+  @Field()
+  closed: boolean;
 }

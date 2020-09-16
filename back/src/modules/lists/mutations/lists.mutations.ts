@@ -6,6 +6,8 @@ import { Mutation, Args } from '@nestjs/graphql';
 import { List } from '../schemas/list.graphql.schema';
 import { createListDtoName, CreateListDto } from '../dto/create-list.dto';
 import { RemoveListGuard } from '../guards/remove-list.guard';
+import { CloseListGuard } from '../guards/close-list.guard';
+import { OpenListGuard } from '../guards/open-list.guard';
 
 @Injectable()
 export class ListsMutations {
@@ -21,5 +23,17 @@ export class ListsMutations {
   @Mutation(() => Number, { name: 'removeList' })
   async removeList(@Args('id') listId: string) {
     return this.listsService.removeList(listId);
+  }
+
+  @UseGuards(AuthOnlyGuard, CloseListGuard)
+  @Mutation(() => List, { name: 'closeList' })
+  async closeList(@Args('id') id: string) {
+    return this.listsService.closeList(id);
+  }
+
+  @UseGuards(AuthOnlyGuard, OpenListGuard)
+  @Mutation(() => List, { name: 'openList' })
+  async openList(@Args('id') id: string) {
+    return this.listsService.openList(id);
   }
 }

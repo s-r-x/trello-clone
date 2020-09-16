@@ -23,4 +23,14 @@ export class ListsPolicies {
     }
     return this.boardsPolicies.isUserAllowedToWrite(userId, boardId);
   }
+  public async isUserAllowedToOpenList(listId: ObjectId, userId: ObjectId) {
+    const boardId = await this.listsService.getBoardId(listId);
+    if (!boardId) {
+      return false;
+    }
+    return this.boardsPolicies.isUserAllowedToWrite(userId, boardId);
+  }
+  public async isUserAllowedToCloseList(listId: ObjectId, userId: ObjectId) {
+    return this.isUserAllowedToOpenList(listId, userId);
+  }
 }

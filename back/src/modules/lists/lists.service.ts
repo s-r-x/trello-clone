@@ -22,6 +22,18 @@ export class ListsService extends AbstractCRUDService<ListDocument> {
   public async create(data: CreateListDto) {
     return super.create(data);
   }
+  public async openList(boardId: ObjectId) {
+    const board = await this.findByIdAndUpdate(boardId, {
+      closed: false,
+    });
+    return board;
+  }
+  public async closeList(boardId: ObjectId) {
+    const board = await this.findByIdAndUpdate(boardId, {
+      closed: true,
+    });
+    return board;
+  }
   public async removeList(id: ObjectId) {
     // TODO
     await super.deleteById(id);

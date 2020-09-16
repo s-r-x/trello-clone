@@ -31,6 +31,7 @@ type List {
   creatorId: String!
   slot: Int!
   title: String!
+  closed: Boolean!
   board: Board!
   cards: Card!
   creator: User!
@@ -92,6 +93,8 @@ type Query {
 type Mutation {
   createList(createListDto: CreateListDto!): List!
   removeList(id: String!): Float!
+  closeList(id: String!): List!
+  openList(id: String!): List!
   createCard(createListDto: CreateCardDto!): Card!
   removeCard(id: String!): Float!
   createCheckItem(createCheckItemDto: CreateCheckItemDto!): CheckItem!

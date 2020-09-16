@@ -33,6 +33,11 @@ export class ListDocument extends Document {
     required: true,
   })
   title: string;
+
+  @Prop({
+    default: false,
+  })
+  closed: boolean;
 }
 
 export const ListSchema = SchemaFactory.createForClass(ListDocument);
