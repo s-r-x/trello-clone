@@ -10,6 +10,7 @@ import { UsersModule } from '../users/users.module';
 import { CardsPolicies } from './cards.policies';
 import { CheckItemsModule } from '../check-items/check-items.module';
 import { CheckListsModule } from '../check-lists/check-lists.module';
+import { LabelsModule } from '../labels/labels.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CheckListsModule } from '../check-lists/check-lists.module';
     forwardRef(() => UsersModule),
     forwardRef(() => CheckListsModule),
     forwardRef(() => CheckItemsModule),
+    forwardRef(() => LabelsModule),
   ],
   providers: [CardsService, CardsResolver, CardsMutations, CardsPolicies],
   exports: [CardsService],

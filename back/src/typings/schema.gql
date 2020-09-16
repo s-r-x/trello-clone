@@ -108,6 +108,8 @@ type Mutation {
   closeList(id: String!): List!
   openList(id: String!): List!
   createCard(createListDto: CreateCardDto!): Card!
+  addLabelToCard(labelId: String!, cardId: String!): Card!
+  removeLabelFromCard(labelId: String!, cardId: String!): Card!
   removeCard(id: String!): Float!
   createCheckItem(createCheckItemDto: CreateCheckItemDto!): CheckItem!
   updateCheckItem(id: String!, updateCheckItemDto: UpdateCheckItemDto!): CheckItem!

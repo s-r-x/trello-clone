@@ -18,6 +18,21 @@ export class CardsMutations {
     return this.cardsService.create(createCardDto);
   }
 
+  @Mutation(() => Card, { name: 'addLabelToCard' })
+  async addLabelToCard(
+    @Args('cardId') cardId: string,
+    @Args('labelId') labelId: string,
+  ) {
+    return this.cardsService.addLabel(cardId, labelId);
+  }
+  @Mutation(() => Card, { name: 'removeLabelFromCard' })
+  async removeLabelFromCard(
+    @Args('cardId') cardId: string,
+    @Args('labelId') labelId: string,
+  ) {
+    return this.cardsService.removeLabel(cardId, labelId);
+  }
+
   @UseGuards(AuthOnlyGuard, RemoveCardGuard)
   @Mutation(() => Number, { name: 'removeCard' })
   async removeCard(@Args('id') id: string) {
