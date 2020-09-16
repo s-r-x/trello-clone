@@ -23,6 +23,7 @@ type Board {
   owner: User!
   lists: [List!]!
   members: [User!]!
+  labels: [Label!]!
 }
 
 type List {
@@ -35,6 +36,13 @@ type List {
   board: Board!
   cards: Card!
   creator: User!
+}
+
+type Label {
+  _id: ID!
+  boardId: String!
+  title: String
+  color: String!
 }
 
 type CardBadges {
@@ -73,13 +81,6 @@ type CheckList {
   boardId: String!
   cardId: String!
   title: String!
-}
-
-type Label {
-  _id: ID!
-  boardId: String!
-  title: String
-  color: String!
 }
 
 type Query {

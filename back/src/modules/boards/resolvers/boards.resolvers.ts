@@ -5,6 +5,8 @@ import { UsersService } from '@/modules/users/users.service';
 import { User } from '@/modules/users/schemas/user.graphql.schema';
 import { ListsService } from '@/modules/lists/lists.service';
 import { List } from '@/modules/lists/schemas/list.graphql.schema';
+import { LabelsService } from '@/modules/labels/labels.service';
+import { Label } from '@/modules/labels/schema/label.gql.schema';
 
 @Resolver(() => Board)
 export class BoardsResolvers {
@@ -12,6 +14,7 @@ export class BoardsResolvers {
     private boardsService: BoardsService,
     private usersService: UsersService,
     private listsService: ListsService,
+    private labelsService: LabelsService,
   ) {}
   @Query(() => Board, { name: 'board' })
   async getBoard(@Args('id') id: string) {
@@ -32,5 +35,9 @@ export class BoardsResolvers {
   @ResolveField('members', () => [User])
   async getMembers(@Parent() board: Board) {
     return this.usersService.findByIds(board.membersIds);
+  }
+  @ResolveField('labels', () => [Label])
+  async getLabels(@Parent() board: Board) {
+    return this.labelsService.findMany({ board: board._id });
   }
 }
