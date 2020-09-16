@@ -11,15 +11,15 @@ import { ListsPolicies } from './lists.policies';
 
 @Module({
   imports: [
-    forwardRef(() => BoardsModule),
-    forwardRef(() => CardsModule),
-    forwardRef(() => UsersModule),
     MongooseModule.forFeature([
       {
         name: ListDocument.name,
         schema: ListSchema,
       },
     ]),
+    forwardRef(() => BoardsModule),
+    forwardRef(() => CardsModule),
+    forwardRef(() => UsersModule),
   ],
   providers: [ListsService, ListsResolver, ListsMutations, ListsPolicies],
   exports: [ListsService],

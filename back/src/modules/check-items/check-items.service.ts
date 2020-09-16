@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
 import { CheckItemDocument } from './schemas/check-item.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -14,7 +19,7 @@ export class CheckItemsService extends AbstractCRUDService<CheckItemDocument> {
   constructor(
     @InjectModel(CheckItemDocument.name)
     protected model: Model<CheckItemDocument>,
-    private cardsService: CardsService,
+    @Inject(forwardRef(() => CardsService)) private cardsService: CardsService,
   ) {
     super();
   }
@@ -27,10 +32,40 @@ export class CheckItemsService extends AbstractCRUDService<CheckItemDocument> {
     });
     return checkItem;
   }
+  async countAmountAndCheckedByCard(cardId: ObjectId) {
+    const res = await this.model.aggregate([
+      {
+        $match: {
+          cardId,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          amount: {
+            $sum: 1,
+          },
+          checked: {
+            $sum: {
+              $cond: [{ $eq: ['$checked', true] }, 1, 0],
+            },
+          },
+        },
+      },
+    ]);
+    if (_.isEmpty(res)) {
+      return [0, 0];
+    }
+    const stats: { amount: number; checked: number } = res[0];
+    return [stats.amount, stats.checked];
+  }
   async updateCheckItem(id: ObjectId, data: UpdateCheckItemDto) {
     const checkItem = await this.findByIdAndUpdate(id, data, {
       oldDoc: true,
     });
+    if (!checkItem) {
+      throw new NotFoundException();
+    }
     if (!_.isUndefined(data.checked) && data.checked !== checkItem.checked) {
       await this.cardsService.updateById(checkItem.cardId, {
         $inc: {
@@ -42,17 +77,18 @@ export class CheckItemsService extends AbstractCRUDService<CheckItemDocument> {
     return checkItem;
   }
   async removeCheckItem(id: ObjectId) {
-    const checkItem = await super.findByIdAndDelete(id);
-    if (checkItem) {
-      await this.cardsService.updateById(checkItem.cardId, {
-        $inc: {
-          badges: {
-            checkItems: -1,
-            ...(checkItem.checked && { checked: -1 }),
-          },
-        },
-      });
+    const checkItem = await this.findByIdAndDelete(id);
+    if (!checkItem) {
+      throw new NotFoundException();
     }
+    await this.cardsService.updateById(checkItem.cardId, {
+      $inc: {
+        badges: {
+          checkItems: -1,
+          ...(checkItem.checked && { checked: -1 }),
+        },
+      },
+    });
     return 1;
   }
 }

@@ -8,18 +8,22 @@ import { CardsResolver } from './resolvers/cards.resolver';
 import { CardsMutations } from './mutations/cards.mutations';
 import { UsersModule } from '../users/users.module';
 import { CardsPolicies } from './cards.policies';
+import { CheckItemsModule } from '../check-items/check-items.module';
+import { CheckListsModule } from '../check-lists/check-lists.module';
 
 @Module({
   imports: [
-    forwardRef(() => ListsModule),
-    forwardRef(() => BoardsModule),
-    forwardRef(() => UsersModule),
     MongooseModule.forFeature([
       {
         name: CardDocument.name,
         schema: CardSchema,
       },
     ]),
+    forwardRef(() => ListsModule),
+    forwardRef(() => BoardsModule),
+    forwardRef(() => UsersModule),
+    forwardRef(() => CheckListsModule),
+    forwardRef(() => CheckItemsModule),
   ],
   providers: [CardsService, CardsResolver, CardsMutations, CardsPolicies],
   exports: [CardsService],

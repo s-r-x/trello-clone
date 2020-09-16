@@ -19,8 +19,9 @@ import { CheckListsModule } from '../check-lists/check-lists.module';
       },
     ]),
     forwardRef(() => CardsModule),
-    forwardRef(() => CheckListsModule)
+    forwardRef(() => CheckListsModule),
   ],
   providers: [CheckItemsService, CheckItemsResolvers, CheckItemsMutations],
+  exports: [CheckItemsService],
 })
 export class CheckItemsModule {}

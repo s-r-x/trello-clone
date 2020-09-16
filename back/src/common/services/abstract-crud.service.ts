@@ -57,6 +57,7 @@ export abstract class AbstractCRUDService<T extends Document> {
     };
   }
   public async findMany(query?: any, opts?: IOptions) {
+    this.model.remove
     return this.model.find(query, '', this.constructOptions(opts));
   }
   public async findOne(query?: any, opts?: IOptions) {
@@ -112,7 +113,10 @@ export abstract class AbstractCRUDService<T extends Document> {
   public async create(data: any) {
     return this.model.create(data);
   }
-  public async deleteById(id: ObjectId): Promise<any> {
+  public async deleteById(id: ObjectId) {
     return this.model.deleteOne({ _id: id });
+  }
+  public async deleteMany(query: any) {
+    return this.model.deleteMany(query);
   }
 }

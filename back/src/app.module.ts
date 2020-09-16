@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './modules/users/users.module';
-//import { PasswordModule } from './modules/password/password.module';
+import { PasswordModule } from './modules/password/password.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BoardsModule } from './modules/boards/boards.module';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -46,7 +46,7 @@ const RedisStore = ConnectRedis(session);
         };
       },
     }),
-    //PasswordModule,
+    PasswordModule,
     AuthModule,
     UsersModule,
     BoardsModule,

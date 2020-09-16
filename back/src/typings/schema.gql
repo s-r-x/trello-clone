@@ -56,13 +56,6 @@ type Card {
   creator: User!
 }
 
-type CheckList {
-  _id: ID!
-  boardId: String!
-  cardId: String!
-  title: String!
-}
-
 type CheckItem {
   _id: ID!
   title: String!
@@ -71,6 +64,13 @@ type CheckItem {
   checked: Boolean!
   card: Card!
   checkList: CheckList!
+}
+
+type CheckList {
+  _id: ID!
+  boardId: String!
+  cardId: String!
+  title: String!
 }
 
 type Query {
@@ -83,10 +83,10 @@ type Query {
   lists: [List!]!
   card(id: String!): Card!
   cards: [Card!]!
-  checkList(id: String!): CheckList!
-  checkLists: [CheckList!]!
   checkItem(id: String!): CheckItem!
   checkItems: [CheckItem!]!
+  checkList(id: String!): CheckList!
+  checkLists: [CheckList!]!
 }
 
 type Mutation {
@@ -94,6 +94,11 @@ type Mutation {
   removeList(id: String!): Float!
   createCard(createListDto: CreateCardDto!): Card!
   removeCard(id: String!): Float!
+  createCheckItem(createCheckItemDto: CreateCheckItemDto!): CheckItem!
+  updateCheckItem(id: String!, updateCheckItemDto: UpdateCheckItemDto!): CheckItem!
+  removeCheckItem(id: String!): Float!
+  createCheckList(createCheckListDto: CreateCheckListDto!): CheckList!
+  removeCheckList(id: String!): Float!
   createBoard(createBoardDto: CreateBoardDto!): Board!
   closeBoard(id: String!): Board!
   openBoard(id: String!): Board!
@@ -103,11 +108,6 @@ type Mutation {
   updateBoard(updateBoardDto: UpdateBoardDto!, id: String!): Board!
   createUser(createUserDto: CreateUserDto!): User!
   login(loginDto: LoginDto!): String!
-  createCheckList(createCheckListDto: CreateCheckListDto!): CheckList!
-  removeCheckList(id: String!): Float!
-  createCheckItem(createCheckItemDto: CreateCheckItemDto!): CheckItem!
-  updateCheckItem(id: String!, updateCheckItemDto: UpdateCheckItemDto!): CheckItem!
-  removeCheckItem(id: String!): Float!
 }
 
 input CreateListDto {
@@ -122,6 +122,24 @@ input CreateCardDto {
   boardId: String!
   title: String!
   creatorId: String!
+}
+
+input CreateCheckItemDto {
+  title: String!
+  checked: Boolean!
+  checkListId: String!
+  cardId: String!
+}
+
+input UpdateCheckItemDto {
+  title: String
+  checked: Boolean
+}
+
+input CreateCheckListDto {
+  title: String!
+  boardId: String!
+  cardId: String!
 }
 
 input CreateBoardDto {
@@ -158,22 +176,4 @@ input CreateUserDto {
 input LoginDto {
   login: String!
   password: String!
-}
-
-input CreateCheckListDto {
-  title: String!
-  boardId: String!
-  cardId: String!
-}
-
-input CreateCheckItemDto {
-  title: String!
-  checked: Boolean!
-  checkListId: String!
-  cardId: String!
-}
-
-input UpdateCheckItemDto {
-  title: String
-  checked: Boolean
 }
