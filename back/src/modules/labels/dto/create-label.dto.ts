@@ -16,3 +16,5 @@ export class CreateLabelDto {
   @Field()
   color: string;
 }
+
+export const createLabelDtoName = 'createLabelDto';

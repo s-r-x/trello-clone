@@ -116,6 +116,8 @@ type Mutation {
   removeCheckItem(id: String!): Float!
   createCheckList(createCheckListDto: CreateCheckListDto!): CheckList!
   removeCheckList(id: String!): Float!
+  createLabel(createLabelDto: CreateLabelDto!): Label!
+  removeLabel(id: String!): Float!
   createBoard(createBoardDto: CreateBoardDto!): Board!
   closeBoard(id: String!): Board!
   openBoard(id: String!): Board!
@@ -157,6 +159,12 @@ input CreateCheckListDto {
   title: String!
   boardId: String!
   cardId: String!
+}
+
+input CreateLabelDto {
+  title: String!
+  boardId: String!
+  color: String!
 }
 
 input CreateBoardDto {
