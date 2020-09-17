@@ -12,21 +12,18 @@ export class UserDocument extends Document {
   login: string;
 
   @Prop()
-  avatar: string;
+  avatar?: string;
 
   @Prop({
     select: false,
   })
   password: string;
 
-  @Prop()
-  email: string;
-
-  @Prop({ default: false })
-  isEmailConfirmed: boolean;
-
-  @Prop({ default: true })
-  isActive: boolean;
+  @Prop({
+    unique: true,
+    sparse: true,
+  })
+  email?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);

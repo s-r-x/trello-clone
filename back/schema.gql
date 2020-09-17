@@ -6,9 +6,7 @@ type User {
   _id: ID!
   login: String!
   avatar: String
-  email: String!
-  isEmailConfirmed: Boolean!
-  isActive: Boolean!
+  email: String
   boards: [Board!]!
 }
 
@@ -108,7 +106,6 @@ type Query {
 }
 
 type Mutation {
-  createUser(createUserDto: CreateUserDto!): User!
   createList(createListDto: CreateListDto!): List!
   removeList(id: String!): Float!
   closeList(id: String!): List!
@@ -131,12 +128,7 @@ type Mutation {
   removeBoardMember(removeBoardMemberDto: RemoveBoardMemberDto!): Board!
   removeBoard(id: String!): Float!
   updateBoard(updateBoardDto: UpdateBoardDto!, id: String!): Board!
-}
-
-input CreateUserDto {
-  login: String!
-  email: String!
-  password: String!
+  createUser(createUserDto: CreateUserDto!): User!
 }
 
 input CreateListDto {
@@ -201,4 +193,10 @@ input UpdateBoardDto {
 
   """Current user id"""
   ownerId: String
+}
+
+input CreateUserDto {
+  login: String!
+  email: String!
+  password: String!
 }

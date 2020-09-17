@@ -5,6 +5,7 @@ import { PasswordService } from '@/modules/password/password.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
+import { ObjectId } from '@/typings';
 
 @Injectable()
 export class UsersService extends AbstractCRUDService<UserDocument> {
@@ -19,12 +20,19 @@ export class UsersService extends AbstractCRUDService<UserDocument> {
     return this.isExists({ login });
   }
   public async isEmailExists(email: string) {
-    return this.isExists({ email, isEmailConfirmed: true });
+    return this.isExists({ email });
   }
   public async create(data: CreateUserDto) {
-    const user = new this.model(data);
+    // TODO:: email
+    const { email: _email, ...rest } = data;
+    const user = new this.model(rest);
     user.password = await this.passwordService.hashPassword(data.password);
     await user.save();
     return user;
+  }
+  public async removeUser(id: ObjectId) {
+    // TODO
+    await super.deleteMany(id);
+    return 1;
   }
 }

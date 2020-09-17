@@ -10,14 +10,8 @@ export class User {
   login: string;
 
   @Field({ nullable: true })
-  avatar: string;
+  avatar?: string;
 
-  @Field()
-  email: string;
-
-  @Field()
-  isEmailConfirmed: boolean;
-
-  @Field()
-  isActive: boolean;
+  @Field({ nullable: true })
+  email?: string;
 }

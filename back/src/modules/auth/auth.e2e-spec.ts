@@ -1,14 +1,14 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { BoardsModule } from './boards.module';
+import { AuthModule } from './auth.module';
 import { createTestingModule } from '@test/utils/testing-module';
 import { ValidationPipe } from '@/common/pipes/validation.pipe';
 
-describe.skip('Boards module', () => {
+describe.skip('Auth module', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
-    const moduleFixture = await createTestingModule([BoardsModule]);
+    const moduleFixture = await createTestingModule([AuthModule]);
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe());
     await app.init();
