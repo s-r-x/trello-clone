@@ -129,6 +129,7 @@ type Mutation {
   removeBoard(id: String!): Float!
   updateBoard(updateBoardDto: UpdateBoardDto!, id: String!): Board!
   createUser(createUserDto: CreateUserDto!): User!
+  updateUser(updateUserDto: UpdateUserDto!, id: String!): User!
 }
 
 input CreateListDto {
@@ -199,4 +200,8 @@ input CreateUserDto {
   login: String!
   email: String!
   password: String!
+}
+
+input UpdateUserDto {
+  avatar: String!
 }

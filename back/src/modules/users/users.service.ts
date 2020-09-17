@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AbstractCRUDService } from '@/common/services/abstract-crud.service';
 import { ObjectId } from '@/typings';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService extends AbstractCRUDService<UserDocument> {
@@ -22,12 +23,16 @@ export class UsersService extends AbstractCRUDService<UserDocument> {
   public async isEmailExists(email: string) {
     return this.isExists({ email });
   }
-  public async create(data: CreateUserDto) {
+  public async createUser(data: CreateUserDto) {
     // TODO:: email
     const { email: _email, ...rest } = data;
     const user = new this.model(rest);
     user.password = await this.passwordService.hashPassword(data.password);
     await user.save();
+    return user;
+  }
+  public async updateUser(userId: ObjectId, data: UpdateUserDto) {
+    const user = await this.findByIdAndUpdate(userId, data);
     return user;
   }
   public async removeUser(id: ObjectId) {

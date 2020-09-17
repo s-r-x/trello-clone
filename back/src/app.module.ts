@@ -19,6 +19,7 @@ import { sessionConfig } from './config/session';
 import { CheckListsModule } from './modules/check-lists/check-lists.module';
 import { CheckItemsModule } from './modules/check-items/check-items.module';
 import { LabelsModule } from './modules/labels/labels.module';
+import { EmailModule } from './modules/email/email.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { LabelsModule } from './modules/labels/labels.module';
     CheckListsModule,
     CheckItemsModule,
     LabelsModule,
+    EmailModule,
   ],
 })
 export class AppModule {}
