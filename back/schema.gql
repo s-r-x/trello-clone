@@ -1,0 +1,204 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  _id: ID!
+  login: String!
+  avatar: String
+  email: String!
+  isEmailConfirmed: Boolean!
+  isActive: Boolean!
+  boards: [Board!]!
+}
+
+type BoardBackground {
+  color: String
+  url: String
+}
+
+type Board {
+  _id: ID!
+  private: Boolean!
+  title: String!
+  bg: BoardBackground
+  membersIds: [String!]!
+  ownerId: String!
+  closed: Boolean!
+  owner: User!
+  lists: [List!]!
+  members: [User!]!
+  labels: [Label!]!
+}
+
+type List {
+  _id: ID!
+  boardId: String!
+  creatorId: String!
+  slot: Int!
+  title: String!
+  closed: Boolean!
+  board: Board!
+  cards: Card!
+  creator: User!
+}
+
+type Label {
+  _id: ID!
+  boardId: String!
+  title: String
+  color: String!
+}
+
+type CardBadges {
+  attachments: Int!
+  checked: Int!
+  checkItems: Int!
+}
+
+type Card {
+  _id: ID!
+  listId: String!
+  boardId: String!
+  desc: String
+  title: String!
+  creatorId: String!
+  commentsCount: Int!
+  badges: CardBadges!
+  closed: Boolean!
+  labels: [Label!]!
+  board: Board!
+  list: List!
+  creator: User!
+}
+
+type CheckItem {
+  _id: ID!
+  title: String!
+  checkListId: String!
+  cardId: String!
+  checked: Boolean!
+  card: Card!
+  checkList: CheckList!
+}
+
+type CheckList {
+  _id: ID!
+  boardId: String!
+  cardId: String!
+  title: String!
+}
+
+type Query {
+  me: User!
+  user(id: String!): User!
+  users: [User!]!
+  board(id: String!): Board!
+  boards: [Board!]!
+  list(id: String!): List!
+  lists: [List!]!
+  card(id: String!): Card!
+  cards: [Card!]!
+  checkItem(id: String!): CheckItem!
+  checkItems: [CheckItem!]!
+  checkList(id: String!): CheckList!
+  checkLists: [CheckList!]!
+  label(id: String!): Label!
+  labels: [Label!]!
+}
+
+type Mutation {
+  createUser(createUserDto: CreateUserDto!): User!
+  createList(createListDto: CreateListDto!): List!
+  removeList(id: String!): Float!
+  closeList(id: String!): List!
+  openList(id: String!): List!
+  createCard(createListDto: CreateCardDto!): Card!
+  addLabelToCard(labelId: String!, cardId: String!): Card!
+  removeLabelFromCard(labelId: String!, cardId: String!): Card!
+  removeCard(id: String!): Float!
+  createCheckItem(createCheckItemDto: CreateCheckItemDto!): CheckItem!
+  updateCheckItem(id: String!, updateCheckItemDto: UpdateCheckItemDto!): CheckItem!
+  removeCheckItem(id: String!): Float!
+  createCheckList(createCheckListDto: CreateCheckListDto!): CheckList!
+  removeCheckList(id: String!): Float!
+  createLabel(createLabelDto: CreateLabelDto!): Label!
+  removeLabel(id: String!): Float!
+  createBoard(createBoardDto: CreateBoardDto!): Board!
+  closeBoard(id: String!): Board!
+  openBoard(id: String!): Board!
+  addBoardMember(addBoardMemberDto: AddBoardMemberDto!): Board!
+  removeBoardMember(removeBoardMemberDto: RemoveBoardMemberDto!): Board!
+  removeBoard(id: String!): Float!
+  updateBoard(updateBoardDto: UpdateBoardDto!, id: String!): Board!
+}
+
+input CreateUserDto {
+  login: String!
+  email: String!
+  password: String!
+}
+
+input CreateListDto {
+  title: String!
+  slot: Float!
+  boardId: String!
+  creatorId: String!
+}
+
+input CreateCardDto {
+  listId: String!
+  boardId: String!
+  title: String!
+  creatorId: String!
+}
+
+input CreateCheckItemDto {
+  title: String!
+  checked: Boolean!
+  checkListId: String!
+  cardId: String!
+}
+
+input UpdateCheckItemDto {
+  title: String
+  checked: Boolean
+}
+
+input CreateCheckListDto {
+  title: String!
+  boardId: String!
+  cardId: String!
+}
+
+input CreateLabelDto {
+  title: String!
+  boardId: String!
+  color: String!
+}
+
+input CreateBoardDto {
+  title: String!
+  private: Boolean!
+
+  """Current user id"""
+  ownerId: String!
+}
+
+input AddBoardMemberDto {
+  boardId: String!
+  userId: String!
+}
+
+input RemoveBoardMemberDto {
+  boardId: String!
+  userId: String!
+}
+
+input UpdateBoardDto {
+  title: String
+  private: Boolean
+
+  """Current user id"""
+  ownerId: String
+}

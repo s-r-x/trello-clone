@@ -20,8 +20,6 @@ import { CheckListsModule } from './modules/check-lists/check-lists.module';
 import { CheckItemsModule } from './modules/check-items/check-items.module';
 import { LabelsModule } from './modules/labels/labels.module';
 
-const RedisStore = ConnectRedis(session);
-
 @Module({
   imports: [
     RedisModule.register(regisConfig),
@@ -37,6 +35,7 @@ const RedisStore = ConnectRedis(session);
     SessionModule.forRootAsync({
       inject: [RedisService],
       useFactory: async (redisService: RedisService) => {
+        const RedisStore = ConnectRedis(session);
         const redisClient = redisService.getClient();
         const store = new RedisStore({ client: redisClient });
         return {
